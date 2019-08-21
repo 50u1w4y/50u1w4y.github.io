@@ -4,21 +4,18 @@ site_description: 'A Blog'
 site_author: '50u1w4y'
 site_url: 'https://50u1w4y.github.io'
 
-# Repository
-repo_name: '50u1w4y/50u1w4y.github.io'
-repo_url: 'https://github.com/50u1w4y/50u1w4y.github.io'
-edit_uri: 'blob/master/docs/'
-
 # Copyright
 copyright: 'Copyright &copy; 2019 50u1w4y'
 
 # Configuration
 theme:
   name: 'material'
-  language: 'zh-Hant'
+  language: 'en'
   palette:
     primary: 'white'
     accent: 'indigo'
+  feature:
+    tabs: true
 
 # Extensions
 markdown_extensions:
@@ -27,5 +24,8 @@ markdown_extensions:
       guess_lang: false
   - toc:
       permalink: true
-      
+
 # Contents
+nav:
+    - Welcome:
+        - Index Page: index.md
