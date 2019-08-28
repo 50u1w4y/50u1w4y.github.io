@@ -1,0 +1,693 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="A Blog">
+      
+      
+        <link rel="canonical" href="https://50u1w4y.github.io/HEVD/buildEnv/">
+      
+      
+        <meta name="author" content="50u1w4y">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.0">
+    
+    
+      
+        <title>HEVD 环境搭建 - 50u1w4y</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.0284f74d.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.01803549.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.74668098.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+    
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#0x00" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://50u1w4y.github.io" title="50u1w4y" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              50u1w4y
+            </span>
+            <span class="md-header-nav__topic">
+              
+                HEVD 环境搭建
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+        
+
+  
+
+<nav class="md-tabs md-tabs--active" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+      <a href="../.." title="Welcome" class="md-tabs__link">
+        Welcome
+      </a>
+    
+  </li>
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../homePage/" title="HEVD" class="md-tabs__link md-tabs__link--active">
+          HEVD
+        </a>
+      
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="https://50u1w4y.github.io" title="50u1w4y" class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </a>
+    50u1w4y
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Welcome" class="md-nav__link">
+      Welcome
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      HEVD
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        HEVD
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../homePage/" title="Home Page" class="md-nav__link">
+      Home Page
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        HEVD 环境搭建
+      </label>
+    
+    <a href="./" title="HEVD 环境搭建" class="md-nav__link md-nav__link--active">
+      HEVD 环境搭建
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#0x00" title="0x00 前言" class="md-nav__link">
+    0x00 前言
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0x01" title="0x01 环境搭建" class="md-nav__link">
+    0x01 环境搭建
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#win7pro-x86-sp1" title="win7pro x86 sp1虚拟机的安装" class="md-nav__link">
+    win7pro x86 sp1虚拟机的安装
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windbg" title="windbg" class="md-nav__link">
+    windbg
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#virtualkd" title="virtualkd" class="md-nav__link">
+    virtualkd
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#virtualkd-debugger-path" title="virtualkd Debugger path 设置问题" class="md-nav__link">
+    virtualkd Debugger path 设置问题
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hevd" title="hevd" class="md-nav__link">
+    hevd
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#osrloader" title="OSRLoader" class="md-nav__link">
+    OSRLoader
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0x02" title="0x02 测试环境是否搭建成功" class="md-nav__link">
+    0x02 测试环境是否搭建成功
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0x03" title="0x03 结束语" class="md-nav__link">
+    0x03 结束语
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../stackoverflow/" title="（一）HEVD 栈溢出" class="md-nav__link">
+      （一）HEVD 栈溢出
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#0x00" title="0x00 前言" class="md-nav__link">
+    0x00 前言
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0x01" title="0x01 环境搭建" class="md-nav__link">
+    0x01 环境搭建
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#win7pro-x86-sp1" title="win7pro x86 sp1虚拟机的安装" class="md-nav__link">
+    win7pro x86 sp1虚拟机的安装
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windbg" title="windbg" class="md-nav__link">
+    windbg
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#virtualkd" title="virtualkd" class="md-nav__link">
+    virtualkd
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#virtualkd-debugger-path" title="virtualkd Debugger path 设置问题" class="md-nav__link">
+    virtualkd Debugger path 设置问题
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hevd" title="hevd" class="md-nav__link">
+    hevd
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#osrloader" title="OSRLoader" class="md-nav__link">
+    OSRLoader
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0x02" title="0x02 测试环境是否搭建成功" class="md-nav__link">
+    0x02 测试环境是否搭建成功
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0x03" title="0x03 结束语" class="md-nav__link">
+    0x03 结束语
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  <h1>HEVD 环境搭建</h1>
+                
+                <h2 id="0x00">0x00 前言<a class="headerlink" href="#0x00" title="Permanent link">&para;</a></h2>
+<p>在开始之前肯定要先搭建起 HEVD 的环境。环境搭建一直都是一件费时的工作，而且讲真这个过程要是一直出现问题真的会让人有点小难受。不过每个人的环境肯定都或多或少有所区别，所以这篇文章更多的是起一个参考作用，具体怎么操作还是要落实自己的环境上。</p>
+<p>那么首先就是我们应该要准备什么样的环境以及为什么</p>
+<blockquote>
+<ul>
+<li>win7 pro x86 sp1: 这是我个人使用的环境，当然使用x64也行</li>
+<li>windbg + virtualkd: virtualkd 的作用一是加速宿主机与虚拟机的通信速度，二是帮我们快速构建起 debug 环境。</li>
+<li>hevd + osrloader: 平时我们安装驱动程序都是使用一个安装程序来进行安装的，但是我们编译出来的只有一个.sys文件，要想让这个.sys文件在虚拟机上起作用的话，就要用到 osrloader 来加载该驱动程序。</li>
+</ul>
+</blockquote>
+<p>当然就算不解释它们的作用大家也能在这个过程中明白它们都是做什么的，只是可能要耗费一些时间。让大家一开始就明白各个软件的作用也能在使大家在搭建的过程中更为清晰地知道自己在做什么，为什么要这样做。</p>
+<h2 id="0x01">0x01 环境搭建<a class="headerlink" href="#0x01" title="Permanent link">&para;</a></h2>
+<p>网上关于 HEVD 的搭建过程以及各个软件的下载、安装与使用过程都有不少的教程了，因此本节更多的是点出一些关键点，剩下的我相信不用写大家也懂。</p>
+<h3 id="win7pro-x86-sp1">win7pro x86 sp1虚拟机的安装<a class="headerlink" href="#win7pro-x86-sp1" title="Permanent link">&para;</a></h3>
+<p>emmm我觉得这个我应该不用多说了，就是建议大家下pro版的或者是enterprise版的，因为比较好破解 (支持正版啊不过一个虚拟机就没必要用正版的了吧emmm</p>
+<h3 id="windbg">windbg<a class="headerlink" href="#windbg" title="Permanent link">&para;</a></h3>
+<p>如果大家是 win10 电脑的话直接在应用商店里搜索 windbg preview 就可以了，个人觉得这个版本的 windbg 界面就很美观。当然网上也有很多老版本的 windbg，而且不知道是 WSDK 还是 WDK 中也自带了 windbg，不过 windbg preview 应该是最美观好用的一个版本吧。</p>
+<p><strong>下载完 windbg 后记得设置符号包(symbol)，它能让你在调试过程中舒服很多</strong></p>
+<p>不过如果使用 windbg preview 在 virtualkd 中可能会遇到一点小问题，后文会给出解决办法。</p>
+<h3 id="virtualkd">virtualkd<a class="headerlink" href="#virtualkd" title="Permanent link">&para;</a></h3>
+<p>前面也说了，virtualkd的作用一是加速宿主机与虚拟机的通信速度，二是帮我们快速构建起 debug 环境。</p>
+<p>看到这两个作用就可以知道即使没有 virtualkd 也没关系。只要在虚拟机的启动项中添加 debugport 参数为串行端口，让串行端口使用和 windbg 一样的命名端口就可以建立其调试环境了。至于通信速度的话我也不知道没有优化的话是什么样的一个速度，因为一开始搭建的过程中看到这个能优化速度就直接使用这个方法了，有兴趣的朋友可以试一试。</p>
+<p>接下来是 virtualkd 的安装和使用过程，我觉得这篇文章 (<a href="https://blog.csdn.net/lixiangminghate/article/details/78659646">virtualkd安装教程</a>) 已经写得很好了，我就没必要再复写一遍了。下文仅给出上面说到的使用 windbg preview 中可能存在的问题。</p>
+<p>windbg preview的下载路径是这个
+<img alt="alt 图片1" src="../images/buildEnv/1.jpg" />
+可是这个文件无法被 virtualkd 识别，并且你还打不开它（所属用户是SYSTEM）</p>
+<h4 id="virtualkd-debugger-path">virtualkd Debugger path 设置问题<a class="headerlink" href="#virtualkd-debugger-path" title="Permanent link">&para;</a></h4>
+<p>在虚拟机上安装完 vitualkd 后，我们要建立起 windbg 和虚拟机的通信，就要在宿主机上打开 vmmon64.exe（32位机器打开32位版本）<img alt="alt 图片3" src="../images/buildEnv/3.jpg" /></p>
+<p>假若我们是在应用商店安装的 windbg preview，那么是不是 Debugger path 下根本找不到这个调试器 : )</p>
+<p>看到上面的红圈，vm monitor 为虚拟机创建了一个 debug 的命名端口，其实就算是其它版本的 windbg，可以被 Debugger path 识别并且通过 Run debugger 打开，其原理也是一样的，都是通过这个 debug 的命名端口来连接。</p>
+<p>因此，我们只需在 windbg preview 中这样配置就好了<img alt="alt 图片4" src="../images/buildEnv/4.jpg" /></p>
+<p>这里顺便提一下运作过程</p>
+<blockquote>
+<ol>
+<li>打开宿主机上的 vm monitor，看到上图左下角的红圈中勾中的选项，它在虚拟机的开机过程中下了一个断点，可以让我们调试包括开机过程，这个断点的位置大概是在阶段0初始化开始的位置（我猜的）</li>
+<li>打开虚拟机</li>
+<li>打开 windbg 并连接</li>
+</ol>
+</blockquote>
+<h3 id="hevd">hevd<a class="headerlink" href="#hevd" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>这里先总括一下具体该做的事，但请耐心看完该小节后再动手</p>
+<ol>
+<li>从 github 上下载 HEVD</li>
+<li>下载某个版本的 Visual Studio</li>
+<li>下载相应版本的 WSDK 和 WDK</li>
+<li>为驱动程序添加证书</li>
+<li>关闭 GS 选项卡</li>
+<li>编译</li>
+</ol>
+</blockquote>
+<p>编译一个驱动程序其实应该很简单，毕竟写项目的人都把项目写成这样了，但由于网上的教程大部分都没写得太详细，所以这个过程可能会出问题然后耗费很多时间</p>
+<p>首先看到 github 上的文档<img alt="alt 图片5" src="../images/buildEnv/5.jpg" />
+上面说直接运行.bat文件就可以了，亲测了一下发现编译链接过程用的 Cmake，其中似乎还需要 Ninja，不太清楚毕竟我没用过 Cmake 编译东西，这里我选择用 VS 进行编译。</p>
+<p>个人的版本是 Visual Studio 2015，然后看到第二步， 编译驱动程序当然需要 WDK 了，该链接指向官网。</p>
+<p>这里先说明一个比较重要的概念，先看两张图<img alt="alt 图片6" src="../images/buildEnv/6.jpg" /></p>
+<p><img alt="alt 图片7" src="../images/buildEnv/7.jpg" />
+<strong>WDK 的版本跟随的应该是 Visual Studio 的版本而不是 Windows 的版本</strong></p>
+<p>比如说我的电脑装的是 Visual Studio 2015，那么看到第一张图我们可以装 Windows 10 1703 或 Windows 10 1607 版本的WDK，然后去第二张图上的链接下载WDK。
+<strong>这里亲测对 Visual Studio 2015 来说，1703 的那个版本是可用的。</strong>
+下载下来的 WDK 版本号为10.0.15063.X</p>
+<p>装好了 WDK 后用 VS 打开 Driver 文件夹下的.sln文件，选择好对应的配置后（比如 release vulnerable x86） 就可以开始 build 了，但是这时候编译其实是会报错的，原因是没有安装 WSDK，这里给出 <a href="https://developer.microsoft.com/en-us/windows/downloads/sdk-archive">WSDK的下载链接</a>。</p>
+<p><strong>注意 WSDK 的版本一定要和 WDK 的版本相对应，比如在我的环境下我安装的 SDK 版本为10.0.15063.X</strong></p>
+<p>（如果没有的话就略过去吧）接下再次编译，又会看到说找不到叫 HEVD.cer 的 TestCertificate 这样一个报错信息。其原因是因为现在 Windows 的驱动程序是需要签名的，我们可以使用 Windows 的测试证书来进行签名，一个是修改引导时的配置信息来使用测试证书为驱动程序进行签名，但我感觉这样太暴力了，另一个方法是编译时生成测试证书并使用它来进行签名，具体操作方法是在 VS 中的 project -&gt; properties -&gt; driver signing 中添加测试证书，如图所示<img alt="alt 图片8" src="../images/buildEnv/8.jpg" />点红圈那里</p>
+<p>至此就可以看到在新生成的文件夹下生成了.sys文件了，这就是我们要的驱动程序。当然若不想在对每个漏洞进行利用的同时又绕过一次 GS 保护，我们在编译之前应该先关闭 GS 选项<img alt="alt 图片9" src="../images/buildEnv/9.jpg" /></p>
+<h3 id="osrloader">OSRLoader<a class="headerlink" href="#osrloader" title="Permanent link">&para;</a></h3>
+<p>生成了.sys驱动程序以后最后把它放到虚拟机上启动服务就行了，这就是OSRLoader的作用。</p>
+<p>到官网上下载 OSRLoader 安装完了之后打开到 Projects\OsrLoader\kit 目录你可以看到好几个文件夹，对应在不同版本的操作系统下的 OSRLoader 版本。我的目标系统是 win7， 所以应该打开 WNET 文件夹下的OSRLoader。</p>
+<blockquote>
+<p>这里顺便提一下其它几个文件夹的目标操作系统</p>
+<ul>
+<li>w2k: windows 2000</li>
+<li>WLH: windows vista</li>
+<li>WNET: 讲真这个名字我真不知道啥意思，有知道的师傅还请教一教我。。。</li>
+<li>WXP: windows XP</li>
+</ul>
+</blockquote>
+<p><strong>还有一点就是选择完 path 之后，应该先点击注册服务再点击开始服务。</strong></p>
+<h2 id="0x02">0x02 测试环境是否搭建成功<a class="headerlink" href="#0x02" title="Permanent link">&para;</a></h2>
+<blockquote>
+<ol>
+<li>打开 vmmon</li>
+<li>打开虚拟机</li>
+<li>打开 windbg 并连接</li>
+</ol>
+</blockquote>
+<p>若 windbg 连接成功则说明 virtualkd 起作用了。</p>
+<p>接下来用 OSRLoader 加载驱动程序，然后在 windbg 中输入命令 lm m h*<img alt="alt 图片10" src="../images/buildEnv/10.jpg" />如果能在输出中看到 HEVD 模块，则说明环境搭建成功了。</p>
+<p>这里解释一下 lm m h* 命令
+<img alt="alt 图片11" src="../images/buildEnv/11.jpg" /></p>
+<p><img alt="alt 图片12" src="../images/buildEnv/12.jpg" />
+而 h* 就是一个通配符</p>
+<h2 id="0x03">0x03 结束语<a class="headerlink" href="#0x03" title="Permanent link">&para;</a></h2>
+<p>该环境用于之后的 HEVD 漏洞利用的学习</p>
+<hr />
+<p><p align="right">2019.8.25</p></p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../homePage/" title="Home Page" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Home Page
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../stackoverflow/" title="（一）HEVD 栈溢出" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                （一）HEVD 栈溢出
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2019 50u1w4y
+          </div>
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.245445c6.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+    
+  </body>
+</html>
