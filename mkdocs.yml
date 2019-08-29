@@ -7,6 +7,10 @@ site_url: 'https://50u1w4y.github.io'
 # Copyright
 copyright: 'Copyright &copy; 2019 50u1w4y'
 
+# Repository
+repo_name: '50u1w4y/50u1w4y.github.io'
+repo_url: 'https://github.com/50u1w4y/50u1w4y.github.io'
+
 # Configuration
 theme:
   name: 'material'
