@@ -50,3 +50,6 @@ nav:
         - Home Page: HEVD/homePage.md
         - HEVD 环境搭建: HEVD/buildEnv.md
         - （一）HEVD 栈溢出: HEVD/stackoverflow.md
+    - 胡说:
+        - Home Page: misc/homePage.md
+        - mkdocs-material 搭建 gitalk: misc/gitalkBuild.md
