@@ -239,6 +239,9 @@ Popen("start cmd", shell = True)
 ## 0x04 结束语
 从下一篇开始将会侧重于对漏洞进行分析利用。
 
+---
+<p align="right">2019.8.28</p>
+
 
 
 
