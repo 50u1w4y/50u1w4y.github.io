@@ -21,7 +21,7 @@
 
 > 之后使用 windbg 调试就可以看到 DbgPrint 输出的消息了
 
-不过这是个什么原理我也搞不懂，有知道的大哥请教教我。
+不过这是个什么原理我也搞不懂。
 
 还有个问题就是从图中可以看到我敲完命令后一直出来一句 `DBGHELP: HEVD is not indexed`，虽然不影响分析但是有没有大哥知道这是什么意思以及怎么解决？
 
@@ -171,8 +171,6 @@ ActiveProcessLinks 是一个双链表节点，在 Windwos 中，所有的活动�
 > 1. 使 eax 值等于 STATUS_UNSUCCESSFUL，也就是 0
 > 2. add esp, 20。为什么这里我们不能 mov esp, ebp呢？因为这里的 ebp 被我们控制成 0x41414141 了。并不指向原来的 old ebp。那这里具体应该使 esp 加多少就要看原来正常的指令到了 call _TriggerBufferOverflowStack 时 ebp 和 esp 相差多少了。假设这时候 ebp 和 esp 相差 0x16，那么我们 add esp, x 中的 x 就等于 0x20（因为 call 指令会执行一条 push eip 使 esp 产生 4 的移动，并且 shellcode 全程并没有使 esp 产生移动）我们可以通过 windbg 来得到这个数值
 > 3. 最后就是 pop ebp;ret 8
-
-**我想问一下为什么我在 windbg 中输入 t 命令之后有时连续执行好多条指令而不是一条指令呢?有没有什么办法能让它一次只确切地执行一条指令？**
 
 ### 使指令流指向我们的 shellcode
 这个很简单，只需要控制 eip 指向我们的 shellcode 的地址就好了

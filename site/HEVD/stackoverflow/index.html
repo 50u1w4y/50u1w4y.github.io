@@ -566,7 +566,7 @@
 <p>首先在要调试的机器（这里是我的win7虚拟机）上以管理员权限运行 DebugView，然后勾选上 <code>Capture Kernel</code> 和 <code>Enable Verbose Kernel Output</code> <img alt="alt 2" src="../images/stackoverflow/2.jpg" /></p>
 <p>之后使用 windbg 调试就可以看到 DbgPrint 输出的消息了</p>
 </blockquote>
-<p>不过这是个什么原理我也搞不懂，有知道的大哥请教教我。</p>
+<p>不过这是个什么原理我也搞不懂。</p>
 <p>还有个问题就是从图中可以看到我敲完命令后一直出来一句 <code>DBGHELP: HEVD is not indexed</code>，虽然不影响分析但是有没有大哥知道这是什么意思以及怎么解决？</p>
 <h2 id="0x02-hevd">0x02 HEVD 栈溢出漏洞分析<a class="headerlink" href="#0x02-hevd" title="Permanent link">&para;</a></h2>
 <p>首先看到我们下载的 HEVD 项目，我们可以看到有这么两个文件夹</p>
@@ -694,7 +694,6 @@
 <li>最后就是 pop ebp;ret 8</li>
 </ol>
 </blockquote>
-<p><strong>我想问一下为什么我在 windbg 中输入 t 命令之后有时连续执行好多条指令而不是一条指令呢?有没有什么办法能让它一次只确切地执行一条指令？</strong></p>
 <h3 id="shellcode_1">使指令流指向我们的 shellcode<a class="headerlink" href="#shellcode_1" title="Permanent link">&para;</a></h3>
 <p>这个很简单，只需要控制 eip 指向我们的 shellcode 的地址就好了</p>
 <h2 id="0x03-hevd">0x03 HEVD 栈溢出漏洞利用<a class="headerlink" href="#0x03-hevd" title="Permanent link">&para;</a></h2>
