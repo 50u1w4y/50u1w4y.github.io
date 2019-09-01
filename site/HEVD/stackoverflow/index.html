@@ -382,6 +382,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../arbitraryWrite/" title="（二）HEVD 任意地址覆盖" class="md-nav__link">
+      （二）HEVD 任意地址覆盖
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -678,8 +690,7 @@
 <p>因此，我们应该</p>
 <ol>
 <li>使 eax 值等于 STATUS_UNSUCCESSFUL，也就是 0</li>
-<li>add esp, 20。为什么这里我们不能 mov esp, ebp呢？因为这里的 ebp 被我们控制成 0x41414141 了。并不指向原来的 old ebp。那这里具体应该使 esp 加多少就要看原来正常的指令到了 mov [ebp + Status], eax 时 ebp 和 esp 相差多少了。（因为 shellcode 全程并没有使 esp 产生移动）我们可以通过 windbg 来得到这个数值<img alt="alt 14" src="../images/stackoverflow/14.jpg" />
-这个值很有可能不相等，请自行调试一下</li>
+<li>add esp, 20。为什么这里我们不能 mov esp, ebp呢？因为这里的 ebp 被我们控制成 0x41414141 了。并不指向原来的 old ebp。那这里具体应该使 esp 加多少就要看原来正常的指令到了 call _TriggerBufferOverflowStack 时 ebp 和 esp 相差多少了。假设这时候 ebp 和 esp 相差 0x16，那么我们 add esp, x 中的 x 就等于 0x20（因为 call 指令会执行一条 push eip 使 esp 产生 4 的移动，并且 shellcode 全程并没有使 esp 产生移动）我们可以通过 windbg 来得到这个数值</li>
 <li>最后就是 pop ebp;ret 8</li>
 </ol>
 </blockquote>
@@ -796,13 +807,13 @@
           </a>
         
         
-          <a href="../../misc/homePage/" title="Home Page" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../arbitraryWrite/" title="（二）HEVD 任意地址覆盖" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Home Page
+                （二）HEVD 任意地址覆盖
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
