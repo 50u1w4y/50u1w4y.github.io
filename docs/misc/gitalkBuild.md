@@ -1,3 +1,5 @@
+<small>转载请注明出处哦 :  )</small>
+
 ## 0x00 前言
 搜了下网上好像没有针对于 mkdocs-material 的 gitalk 使用方法。于是自己一顿瞎几把操作还好最后还是搭建成功了，这篇文章写给同样想要使用 mkdocs-material 来搭建 gitalk 的读者，以使你们能迅速地搭建起 gitalk。
 
