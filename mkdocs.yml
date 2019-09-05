@@ -52,6 +52,8 @@ nav:
         - （一）HEVD 栈溢出: HEVD/stackoverflow.md
         - （二）HEVD 任意地址覆盖: HEVD/arbitraryWrite.md
         - （三）HEVD 非换页池溢出: HEVD/nonPagedpooloverflow.md
+        - （四）HEVD 空指针引用: HEVD/nullpointerDereference.md
+        - （五）HEVD 未初始化栈变量: HEVD/uninitializedStackVariable.md
     - 胡说:
         - Home Page: misc/homePage.md
         - mkdocs-material 搭建 gitalk: misc/gitalkBuild.md

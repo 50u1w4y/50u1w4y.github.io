@@ -17,7 +17,7 @@
 emmm我觉得这个我应该不用多说了，就是建议大家下pro版的或者是enterprise版的，因为比较好破解 (支持正版啊不过一个虚拟机就没必要用正版的了吧emmm
 
 ### windbg
-如果大家是 win10 电脑的话直接在应用商店里搜索 windbg preview 就可以了，个人觉得这个版本的 windbg 界面就很美观。当然网上也有很多老版本的 windbg，而且不知道是 WSDK 还是 WDK 中也自带了 windbg，不过 windbg preview 应该是最美观好用的一个版本吧。
+如果大家是 win10 电脑的话直接在应用商店里搜索 windbg preview 就可以了，个人觉得这个版本的 windbg 界面就很美观。当然网上也有很多老版本的 windbg，而且 WSDK 中也自带了 windbg，不过 windbg preview 应该是最美观的一个版本吧。
 
 **下载完 windbg 后记得设置符号包(symbol)，它能让你在调试过程中舒服很多**
 

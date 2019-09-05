@@ -406,6 +406,30 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../nullpointerDereference/" title="（四）HEVD 空指针引用" class="md-nav__link">
+      （四）HEVD 空指针引用
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../uninitializedStackVariable/" title="（五）HEVD 未初始化栈变量" class="md-nav__link">
+      （五）HEVD 未初始化栈变量
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -806,8 +830,8 @@
 
 
     <span class="n">HANDLE</span> <span class="n">hevDevice</span> <span class="o">=</span> <span class="n">CreateFileA</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\\\\</span><span class="s">.</span><span class="se">\\</span><span class="s">HackSysExtremeVulnerableDriver&quot;</span><span class="p">,</span> <span class="mh">0xC0000000</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="mh">0x3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
-    <span class="n">LPDWORD</span> <span class="n">lpBytesReturned</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-    <span class="n">DeviceIoControl</span><span class="p">(</span><span class="n">hevDevice</span><span class="p">,</span> <span class="mh">0x22200f</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span> <span class="o">+</span> <span class="mi">40</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">lpBytesReturned</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+    <span class="n">DWORD</span> <span class="n">lpBytesReturned</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">DeviceIoControl</span><span class="p">(</span><span class="n">hevDevice</span><span class="p">,</span> <span class="mh">0x22200f</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span> <span class="o">+</span> <span class="mi">40</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">lpBytesReturned</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
 
     <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">8</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">spray2</span><span class="p">)</span> <span class="o">/</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">HANDLE</span><span class="p">));</span> <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">16</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
@@ -891,13 +915,13 @@
           </a>
         
         
-          <a href="../../misc/homePage/" title="Home Page" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../nullpointerDereference/" title="（四）HEVD 空指针引用" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Home Page
+                （四）HEVD 空指针引用
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
