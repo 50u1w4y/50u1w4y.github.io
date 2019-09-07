@@ -786,7 +786,7 @@
 </blockquote>
 <p>所以为什么要使用 CreateEventW 而不是 CreateEventA？因为我们的地址中总会出现 00，用 A 的话字符串会被截断，用 W 的话要遇到 00 00 才会被截断，这满足我们的需求。</p>
 <h3 id="lpname">使每个 lpName 都不相等的原因<a class="headerlink" href="#lpname" title="Permanent link">&para;</a></h3>
-<p>因为若是每个 lpName 都相等的话，你就算调用再多次 CreateEventW，到最后换页池中也只存在着一块 lpName（因为是字符串，只要有一份就够了），也就是说到最后 PPPagedLookasideList 256字节链上只会存在一块空闲换页池，那要是这个换页池在我们的漏洞触发前被别人申请了呢？所以填满PPPagedLookasideList 256字节链才是最安全的。</p>
+<p>因为若是每个 lpName 都相等的话，你就算调用再多次 CreateEventW，到最后换页池中也只存在着一块 lpName（因为是字符串，只要有一份就够了），也就是说到最后 PPPagedLookasideList 248字节链上只会存在一块空闲换页池，那要是这个换页池在我们的漏洞触发前被别人申请了呢？所以填满PPPagedLookasideList 248字节链才是最安全的。</p>
 <p>到这里的话应该没有什么盲点了吧 emmm</p>
 <p>最后是一个求助</p>
 <p>我在调试时发现</p>
