@@ -178,8 +178,6 @@ int main() {
 
 所以如果你的情况和我一样的话（首先确保栈喷射确实成功了），你不妨试试去掉所有 debug 因素。
 
-因为不能把 windbg 开着来 getshell，所以我也不知道最终栈上的结构到底是什么样的，可以确定的一点就只是 UninitializedMemory.Callback 的位置一定是 shellcode 的地址。
-
 ## 0x03 结束语
 
 ： )

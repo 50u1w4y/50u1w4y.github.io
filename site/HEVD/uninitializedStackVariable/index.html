@@ -409,6 +409,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../uninitializedHeapVariable/" title="（六）HEVD 未初始化堆变量" class="md-nav__link">
+      （六）HEVD 未初始化堆变量
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -689,7 +701,6 @@
 <p>这时候我就在想啊，一来看别人这个方法都是成功的，二来从 NtMapUserPhysicalPages 到 TriggerUninitializedMemoryStack 也就经历退出内核态回到用户态，以及 DriverEntry -&gt; IrpDeviceIoCtlHandler -&gt; UninitializedMemoryStackIoctlHandler -&gt; TriggerUninitializedMemoryStack 这么一个过程，不至于用掉这么多空间吧。要说这过程中有什么东西可能插手的话，就只有可能是 Debug 了。</p>
 <p>然后我就把 HEVD 驱动程序换成了 release 版本的，把 windbg 关掉，诶嘿，还真 getshell 了。</p>
 <p>所以如果你的情况和我一样的话（首先确保栈喷射确实成功了），你不妨试试去掉所有 debug 因素。</p>
-<p>因为不能把 windbg 开着来 getshell，所以我也不知道最终栈上的结构到底是什么样的，可以确定的一点就只是 UninitializedMemory.Callback 的位置一定是 shellcode 的地址。</p>
 <h2 id="0x03">0x03 结束语<a class="headerlink" href="#0x03" title="Permanent link">&para;</a></h2>
 <p>： )</p>
 <hr />
@@ -750,13 +761,13 @@
           </a>
         
         
-          <a href="../../misc/homePage/" title="Home Page" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../uninitializedHeapVariable/" title="（六）HEVD 未初始化堆变量" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Home Page
+                （六）HEVD 未初始化堆变量
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
