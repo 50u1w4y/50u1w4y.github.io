@@ -28,12 +28,6 @@
 
 你调用 NtQueryIntervalProfile 函数的时候传的第一个参数不为 0 （让 NtQueryIntervalProfile 顺利地调用 KeQueryIntervalProfile），并且不为 1 （让 KeQueryIntervalProfile 顺利地调用 call [HalDispatchTable+0x4] ）就可以了
 
-奇怪的是，不知道为什么师傅们传的第一个参数都为 0x1337。虽然 0x1337 确实是满足上面我说的条件的，但是这个值并不是一个普通的 KPROFILE_SOURCE 枚举值
-
-![alt 5](images/arbitraryWrite/5.jpg)
-
-不知道 0x1337 是一个什么样的 specific profile sources 以及为什么要用它呢？有知道的师傅还望教一下我 0 0
-
 好，到目前为止我们已经大致知道该怎么利用漏洞了
 
 > 1. 使用程序中存在的漏洞覆盖 [HalDispatchTable+0x4] 为指向我们 shellcode 的指针值
@@ -209,6 +203,8 @@ hex( (0x00000022 << 16) | (0x00000000 << 14) | (0x802 << 2) | 0x00000003 )
 > 2. 分配一块具有执行权限的空间存放我们的 shellcode
 > 3. 调用 DeviceIoControl 触发漏洞覆盖 [halDispatchTable + 0x4]
 > 4. 调用 NtQueryIntervalProfile 执行我们的 shellcode
+
+这里的堆栈平衡像我们这样写其实是直接从 KeQueryIntervalProfile 回到了 NtQueryIntervalProfle 的，KeQueryIntervalProfle 后面的指令都没有得到执行。
 
 ## 0x03 结束语
 大家可以尝试一下自己编写 exp。因为就算你脑子懂了真正写 exp 也可能到处出问题，所以多写写 exp 可以熟练我们编写 exp 的能力。(小声bb) 这次用 c 写这个 exp 就是脑子：懂了，编译器：error 99999 : )

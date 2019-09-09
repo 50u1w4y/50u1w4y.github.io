@@ -138,7 +138,6 @@ char shellcode[] = {
 	"\x61"                          // popad
 
 	"\xC3"                          // ret
-	//"\xC2\x10\x00"                  // ret 16
 };
 */
 

@@ -775,8 +775,7 @@
     <span class="s">&quot;</span><span class="se">\x89\x91\xf8\x00\x00\x00</span><span class="s">&quot;</span>      <span class="c1">// mov [ecx+0xf8],edx</span>
     <span class="s">&quot;</span><span class="se">\x61</span><span class="s">&quot;</span>                          <span class="c1">// popad</span>
 
-    <span class="s">&quot;</span><span class="se">\xC3</span><span class="s">&quot;</span>                          <span class="c1">// ret</span>
-    <span class="c1">//&quot;\xC2\x10\x00&quot;                  // ret 16</span>
+    <span class="s">&quot;</span><span class="se">\xC2\x10\x00</span><span class="s">&quot;</span>                  <span class="c1">// ret 16</span>
 <span class="p">};</span>
 
 <span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
@@ -877,7 +876,8 @@
 <p><img alt="alt 8" src="../images/nonPagedpooloverflow/8.jpg" /></p>
 <p>首先我们不能让系统自己分配，因为我们要确切地从 0x00000000 开始分配。然后这个值根据我的测试结果只要你填一个大于 0 的数系统都会从 0x00000000 开始分配，其区别只在于影响到第四个参数(RegionSize)的返回值。文档上说是 rounded down，这应该是一个四舍五入的算法，具体从多少开始 rounded 到下一个我不太清楚，反正小一点分配本页面，大一点就是连下一个页面都分配了。因此这个值只要是个大于 0 的数就行。</p>
 <p>然后是堆栈平衡问题。</p>
-<p>这次我们的 shellcode 什么函数都没有劫持。只是 ObpDecrementHandleCount 函数简单地 call 了我们的 shellcode，然后我们的 shellcode 又什么寄存器都没修改，所以最后只要简单地 ret 就好了，不存在堆栈平衡问题，只是不知道为什么师傅们都 ret 16</p>
+<p><img alt="alt 10" src="../images/nonPagedpooloverflow/10.jpg" /></p>
+<p>call dword ptr [edi + 60h] 是实际调用我们 shellcode 的语句。因为在调用函数前压入了 4 个参数，所以我们在最后需要 ret 16</p>
 <h2 id="0x03">0x03 结束语<a class="headerlink" href="#0x03" title="Permanent link">&para;</a></h2>
 <p>这次非换页池溢出感觉又学到了很多东西，写 exp 也熟练多了，虽然又是一天愉快的 error 99999 </p>
 <p>： )</p>

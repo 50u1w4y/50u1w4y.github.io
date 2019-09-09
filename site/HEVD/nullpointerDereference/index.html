@@ -473,7 +473,6 @@
     <span class="s">&quot;</span><span class="se">\x61</span><span class="s">&quot;</span>                          <span class="c1">// popad</span>
 
     <span class="s">&quot;</span><span class="se">\xC3</span><span class="s">&quot;</span>                          <span class="c1">// ret</span>
-                                    <span class="c1">//&quot;\xC2\x10\x00&quot;                  // ret 16</span>
 <span class="p">};</span>
 
 
@@ -517,6 +516,7 @@
 <span class="p">}</span>
 </pre></div>
 
+<p>关于堆栈平衡问题，像这种直接 NullPointerDereference-&gt;Callback() 没有参数的我们就直接 ret 就好了。</p>
 <p>： )</p>
 <hr />
 <p align='right'>2019.9.4</p>

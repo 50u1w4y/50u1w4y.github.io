@@ -40,7 +40,6 @@ char shellcode[] = {
 	"\x61"                          // popad
 
 	"\xC3"                          // ret
-									//"\xC2\x10\x00"                  // ret 16
 };
 
 
@@ -84,6 +83,8 @@ int main()
 }
 
 ```
+
+关于堆栈平衡问题，像这种直接 NullPointerDereference->Callback() 没有参数的我们就直接 ret 就好了。
 
 ： )
 
