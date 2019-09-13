@@ -91,7 +91,7 @@ windbg preview的下载路径是这个
 
 > - w2k: windows 2000
 > - WLH: windows vista
-> - WNET: 讲真这个名字我真不知道啥意思，有知道的师傅还请教一教我。。。
+> - WNET: windows 7 及以上
 > - WXP: windows XP
 
 **还有一点就是选择完 path 之后，应该先点击注册服务再点击开始服务。**
