@@ -57,6 +57,7 @@ nav:
         - （六）HEVD 未初始化堆变量: HEVD/uninitializedHeapVariable.md
         - （七）HEVD Use After Free: HEVD/useAfterFree.md 
         - bitmap 任意地址写漏洞利用: HEVD/bitmap.md
+        - RS1 下 bitmap 的替代方法: HEVD/bitmapReplace_RS1.md
     - 胡说:
         - Home Page: misc/homePage.md
         - mkdocs-material 搭建 gitalk: misc/gitalkBuild.md
