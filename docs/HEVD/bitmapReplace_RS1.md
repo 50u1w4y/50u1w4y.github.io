@@ -70,21 +70,11 @@ int main()
 
 ![alt 1](images/bitmapReplace_RS1/1.jpg)
 
-题外话，这里的 dq 0x000001cb`da71b640 命令的结果可能显示 ????????，看起来像是一块未分配的不可读写的地址，但你会发现即使这边显示的是 ????????，后面的代码也可以把地址泄露出来。正常来说对一块 ???????? 的地址进行类似
-
-```
-DWORD64 surfaceObject = *(PDWORD64)pKernelAddress
-```
-
-的读写操作的话，程序应该会崩溃才是。所以个人感觉应该是 windbg 的显示问题，这块地址应该是像图中这样有数据的才是。
-
-回归正题，*(PDWORD64)pKernelAddress 本来应该指向 surfaceObject，即我们创建的 bitmap GDI 对象在换页会话池中的位置，但是看到图中，你有没有发现这个地址异常高？我们看一下这个地址的内存情况
+可以看到，*(PDWORD64)pKernelAddress 本来应该指向 surfaceObject，即我们创建的 bitmap GDI 对象在换页会话池中的位置，但是看到图中，你有没有发现这个地址异常高？我们看一下这个地址的内存情况
 
 ![alt 2](images/bitmapReplace_RS1/2.jpg)
 
 没错，原本应该指向 surfaceObject 的 *(PDWORD64)pKernelAddress 指向了一块无意义的地址。因此 *(PDWORD64)pKernelAddress + 0x18 + 0x38 也不是我们所要的 pvScan0 的地址了，这就是微软在 RS1 下对 bitmap 的利用所进行的缓解措施。
-
-(其实我总觉得这个 *(PDWORD64)pKernelAddress 是有意义的，虽然它不直接等于 surfaceObject 的地址了，但是我猜测可能可以通过某种变换来得到 surfaceObject 的地址，毕竟每次运行 *(PDWORD64)pKernelAddress 的值都在发生变化，而且高好多位都是不变的，看起来不太像是无意义地让 *(PDWORD64)pKernelAddress 指向一块无意义的地址，只不过不知道怎么才能知道微软到底做了什么)
 
 ## 0x02 利用其它对象来泄露 bitmap GDI 对象的地址
 通过上一小节，我们知道通过 GdiSharedHandleTable -> pKernel -> pvScan0 来获取 pvScan0 的地址的方法已经行不通了，那么我们应该怎么办呢？这时候应该有两种思路
