@@ -61,6 +61,7 @@ nav:
     - 漏洞复现:
         - Home Page: recurrence/homePage.md
         - CVE-2017-0263: recurrence/CVE-2017-0263.md
+        - CVE-2021-24074: recurrence/CVE-2021-24074.md
     - 胡说:
         - Home Page: misc/homePage.md
         - mkdocs-material 搭建 gitalk: misc/gitalkBuild.md

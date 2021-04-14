@@ -137,7 +137,7 @@ int main()
 
 > 因为我们的 shellcode 最终是要转化为字节的形式的，然后我把汇编代码转化为字节的形式是使用 VS 的 debug 窗口来做到的![alt 7](images/stackoverflow/7.jpg)
 
-> 像这样一个 byte 一个 byte 地复制粘贴出来，个人感觉这种做法很低效，不知道师傅们有没有什么好用的方法呢?
+> 像这样一个 byte 一个 byte 地复制粘贴出来，这种做法其实很低效，代码短了还行，代码长的话建议用代码来实现批量输出。
 
 shellcode 的代码不长，这里就解释一下整段代码。
 ![alt 8](images/stackoverflow/8.jpg)
